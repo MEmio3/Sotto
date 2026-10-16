@@ -71,6 +71,24 @@ function setLevel(level) {
     bars[i].style.setProperty('--height', Math.min(7.5, height).toFixed(2));
   }
 }
+let modeSaving = false;
+function renderWritingMode() {
+  const selected = data.settings.writingMode || 'precise';
+  const mode = data.writingModes?.find(item => item.id === selected);
+  document.querySelectorAll('[data-writing-mode]').forEach(button => {
+    const pressed = button.dataset.writingMode === selected;
+    button.classList.toggle('selected', pressed); button.setAttribute('aria-pressed', String(pressed));
+    button.disabled = active() || modeSaving;
+  });
+  if (mode) $('writing-mode-description').textContent = mode.description;
+}
+$('writing-modes').onclick = action(async event => {
+  const button = event.target.closest('[data-writing-mode]');
+  if (!button || button.disabled || button.dataset.writingMode === (data.settings.writingMode || 'precise')) return;
+  modeSaving = true; renderWritingMode();
+  try { await call('mode', button.dataset.writingMode); }
+  finally { modeSaving = false; renderWritingMode(); }
+});
 function renderState() {
   const state = data.state, stage = state.stage, connection = data.connections.find(c => c.id === data.activeId);
   const labels = { idle: 'READY WHEN YOU ARE', starting: 'OPENING MICROPHONE', recording: 'LISTENING', transcribing: 'TRANSCRIBING', polishing: 'FINDING THE RIGHT WORDS', inserting: 'INSERTING YOUR WORDS', done: 'THOUGHTFULLY PUT', error: 'LET’S TRY THAT AGAIN', cancelled: 'CANCELLED' };
@@ -102,12 +120,13 @@ function renderState() {
   $('account-label').textContent = connection?.name || 'Make a connection';
   $('account-subtitle').textContent = connection ? connection.type === 'antigravity' ? 'Google account · experimental' : 'Direct API connection' : 'Bring your preferred AI';
   $('history-count').textContent = data.history.length;
-  $('version').textContent = `v${data.version || '0.1.1'}`;
+  $('version').textContent = `v${data.version || '0.1.2'}`;
   if (!active()) setLevel(.05);
-  renderLatest();
+  renderWritingMode(); renderLatest();
 }
 function resultMarkup(entry, tab) {
-  return `<div class="result-meta"><span class="badge">${esc(entry.language || 'English')}</span><span>${esc(date(entry.createdAt))}</span>${entry.duration ? `<span>${time(entry.duration)} recording</span>` : ''}${entry.elapsed ? `<span>${(entry.elapsed / 1000).toFixed(1)}s processing</span>` : ''}</div>${entry.uncertain?.length ? `<div class="uncertain-note">Review unclear speech: ${esc(entry.uncertain.join(' · '))}</div>` : ''}<div class="result-text" dir="auto">${esc(tab === 'transcript' ? entry.transcript : entry.text)}</div>`;
+  const mode = data.writingModes?.find(item => item.id === entry.writingMode);
+  return `<div class="result-meta"><span class="badge">${esc(entry.language || 'English')}</span>${mode ? `<span class="badge">${esc(mode.label)}</span>` : ''}<span>${esc(date(entry.createdAt))}</span>${entry.duration ? `<span>${time(entry.duration)} recording</span>` : ''}${entry.elapsed ? `<span>${(entry.elapsed / 1000).toFixed(1)}s processing</span>` : ''}</div>${entry.uncertain?.length ? `<div class="uncertain-note">Review unclear speech: ${esc(entry.uncertain.join(' · '))}</div>` : ''}<div class="result-text" dir="auto">${esc(tab === 'transcript' ? entry.transcript : entry.text)}</div>`;
 }
 function latest() { return data.state.result || data.history.find(e => e.status === 'success'); }
 function renderLatest() {

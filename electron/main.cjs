@@ -5,7 +5,7 @@ const { Store } = require('./store.cjs');
 const { Desktop } = require('./desktop.cjs');
 const { GoogleAccount } = require('./google.cjs');
 const providers = require('./providers.cjs');
-const { DEFAULT_SETTINGS, id, redact, safeBaseUrl, selectFastModel } = require('./core.cjs');
+const { DEFAULT_SETTINGS, WRITING_MODES, id, redact, safeBaseUrl, selectFastModel } = require('./core.cjs');
 
 let win, hud, tray, store, desktop, google, quitting = false, target = null, controller = null, lastJob = null;
 let state = { stage: 'idle', message: '', override: '', startedAt: 0, result: null, canRetry: false };
@@ -14,6 +14,7 @@ const activeStages = ['starting', 'recording', 'transcribing', 'polishing', 'ins
 const recordingStages = ['starting', 'recording'];
 if (process.env.SOTTO_TEST_DATA) app.setPath('userData', process.env.SOTTO_TEST_DATA);
 if (process.env.SOTTO_SMOKE_TEST === '1') {
+  app.disableHardwareAcceleration();
   app.commandLine.appendSwitch('use-fake-device-for-media-stream');
   app.commandLine.appendSwitch('use-fake-ui-for-media-stream');
 }
@@ -21,7 +22,7 @@ const locked = app.requestSingleInstanceLock();
 if (!locked) app.quit();
 app.on('second-instance', () => show());
 
-function snapshot() { return { ...store.snapshot(), state, version: app.getVersion(), desktopReady: desktop.ready, platform: process.platform }; }
+function snapshot() { return { ...store.snapshot(), state, writingModes: Object.entries(WRITING_MODES).map(([id, mode]) => ({ id, label: mode.label, description: mode.description })), version: app.getVersion(), desktopReady: desktop.ready, platform: process.platform }; }
 function send(channel, value) { for (const window of [win, hud]) if (window && !window.isDestroyed()) window.webContents.send(channel, value); }
 function update(patch) {
   state = { ...state, ...patch };
@@ -29,6 +30,8 @@ function update(patch) {
   state.languageKeys = store.config.settings.languageKeys;
   state.spokenLanguage = store.config.settings.spokenLanguage;
   state.hotkey = store.config.settings.hotkey;
+  state.writingMode = store.config.settings.writingMode;
+  state.writingModeLabel = WRITING_MODES[state.writingMode]?.label || 'Precise';
   send('state', state);
   if (hud && !hud.isDestroyed()) {
     clearTimeout(hudHideTimer);
@@ -94,7 +97,7 @@ async function processJob(job, existingId = null) {
   const secret = store.secret(connection.id), settings = { ...store.config.settings };
   const requestId = existingId || id();
   const filename = job.bytes ? store.saveAudio(requestId, job.bytes) : null;
-  const record = { id: requestId, createdAt: (existingId && store.history.find(e => e.id === existingId)?.createdAt) || new Date().toISOString(), duration: job.duration || 0, connection: connection.name, model: connection.model, status: 'processing', text: '', transcript: job.text || '', language: job.override || settings.outputLanguage, uncertain: [], audio: filename, error: '' };
+  const record = { id: requestId, createdAt: (existingId && store.history.find(e => e.id === existingId)?.createdAt) || new Date().toISOString(), duration: job.duration || 0, connection: connection.name, model: connection.model, writingMode: settings.writingMode, status: 'processing', text: '', transcript: job.text || '', language: job.override || settings.outputLanguage, uncertain: [], audio: filename, error: '' };
   if (existingId) store.updateHistory(existingId, record); else if (settings.saveHistory) store.addHistory(record);
   lastJob = job;
   changed(); update({ stage: 'transcribing', message: '', result: null, canRetry: false });
@@ -136,6 +139,11 @@ function installHandlers() {
   handle('recording:error', message => { fail(new Error(String(message).slice(0, 500))); });
   handle('recording:level', level => { send('level', Math.max(0, Math.min(1, Number(level) || 0))); });
   handle('language', language => { if (!['', 'English', 'Bangla', 'Arabic', 'Hindi', 'Spanish', 'French', 'German', 'Japanese', 'Chinese', 'Korean', 'Portuguese', 'Urdu', 'Same as speech'].includes(language)) throw new Error('Choose a supported output setting. Spoken instructions can select other languages.'); if (!activeStages.includes(state.stage)) preferredOverride = language; update({ override: language }); });
+  handle('mode', mode => {
+    if (activeStages.includes(state.stage)) throw new Error('Finish or cancel the current dictation before changing writing modes.');
+    if (typeof mode !== 'string' || !Object.hasOwn(WRITING_MODES, mode)) throw new Error('Choose one of the five writing modes.');
+    store.config.settings.writingMode = mode; store.save(); changed(); update({});
+  });
   handle('recording:audio', async payload => {
     languageKeys(false);
     if (!recordingStages.includes(state.stage) && state.stage !== 'transcribing') return;
@@ -164,6 +172,7 @@ function installHandlers() {
       if (key in settings && typeof settings[key] === typeof defaultValue) next[key] = typeof defaultValue === 'string' ? settings[key].slice(0, key === 'extraInstructions' ? 3000 : 500) : settings[key];
     }
     if (!['conservative', 'literal'].includes(next.cleanup) || !['provider', 'local'].includes(next.transcription)) throw new Error('Invalid processing setting.');
+    if (!Object.hasOwn(WRITING_MODES, next.writingMode)) throw new Error('Choose one of the five writing modes.');
     bindHotkey(next.hotkey); store.config.settings = next; store.save(); changed(); return snapshot();
   });
   handle('connection:save', data => {

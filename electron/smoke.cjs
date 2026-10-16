@@ -24,12 +24,14 @@ async function run({ win, hud, store, desktop, google, app, globalShortcut, clip
     await evaluate(`document.querySelector('[data-page="dictation"]').click()`); await capture('mobile');
     checks.smallNoOverflow = await evaluate('document.documentElement.scrollWidth <= innerWidth');
     assert.ok(checks.smallNoOverflow); win.setSize(...originalSize);
+    const seenInstructions = [];
     const server = http.createServer(async (req, res) => {
       let body = ''; for await (const chunk of req) body += chunk;
       res.setHeader('Content-Type', 'application/json');
       if (req.url.endsWith('/models')) return res.end(JSON.stringify({ data: [{ id: 'test-flash' }] }));
       if (req.url.endsWith('/audio/transcriptions')) return res.end(JSON.stringify({ text: 'আমি আজ আসতে পারব না।' }));
       const input = JSON.parse(body || '{}');
+      if (input.messages?.[0]?.content) seenInstructions.push(input.messages[0].content);
       if (body.includes('__FAIL__')) return res.writeHead(429).end('{}');
       const bangla = input.messages?.[0]?.content.includes('explicitly selected Bangla');
       res.end(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ transcript: 'আমি আজ আসতে পারব না।', text: bangla ? 'আমি আজ আসতে পারব না।' : 'I will not be able to come today.', language: bangla ? 'Bangla' : 'English', noSpeech: false, uncertain: [] }) } }] }));
@@ -41,11 +43,35 @@ async function run({ win, hud, store, desktop, google, app, globalShortcut, clip
     await ipc('text:process', 'আমি আজ আসতে পারব না।');
     let snapshot = (await ipc('snapshot')).value;
     assert.equal(snapshot.state.stage, 'done'); assert.equal(snapshot.history[0].text, 'I will not be able to come today.'); checks.typedPipeline = true;
+    const modes = snapshot.writingModes;
+    assert.equal(modes.length, 5);
+    for (const mode of modes) {
+      await evaluate(`document.querySelector('[data-writing-mode="${mode.id}"]').click()`);
+      await until(async () => (await ipc('snapshot')).value.settings.writingMode === mode.id);
+      await until(() => evaluate(`document.querySelector('[data-writing-mode="${mode.id}"]').getAttribute('aria-pressed') === 'true' && !document.querySelector('[data-writing-mode="${mode.id}"]').disabled`));
+      assert.equal(await evaluate('document.getElementById("writing-mode-description").textContent'), mode.description);
+      await ipc('text:process', 'আমি আজ আসতে পারব না।');
+      snapshot = (await ipc('snapshot')).value;
+      assert.equal(snapshot.state.stage, 'done'); assert.equal(snapshot.history[0].writingMode, mode.id);
+      assert.ok(seenInstructions.at(-1).includes(`Writing mode: ${mode.label}.`));
+    }
+    assert.equal(JSON.parse(fs.readFileSync(path.join(directory, 'settings.json'), 'utf8')).settings.writingMode, 'casual');
+    assert.equal((await ipc('mode', '__proto__')).ok, false);
+    await ipc('mode', 'precise'); checks.writingModes = true;
+    await capture('writing-modes');
+    const modeSize = win.getSize(); win.setMinimumSize(360, 600); win.setSize(390, 844); await capture('writing-modes-compact');
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'));
+    const modeButtons = await evaluate('Array.from(document.querySelectorAll("[data-writing-mode]"), b => ({width:b.getBoundingClientRect().width,height:b.getBoundingClientRect().height}))');
+    assert.ok(modeButtons.every(b => b.width >= 44 && b.height >= 40));
+    win.setSize(...modeSize); checks.writingModeLayout = true;
     await ipc('language', 'Bangla'); await ipc('text:process', 'আমি আজ আসতে পারব না।');
     snapshot = (await ipc('snapshot')).value; assert.equal(snapshot.history[0].language, 'Bangla'); checks.languageSelection = true;
     await ipc('language', '');
     await ipc('recording:toggle');
     await until(async () => (await ipc('snapshot')).value.state.stage === 'recording');
+    assert.equal((await ipc('mode', 'casual')).ok, false);
+    assert.ok(await evaluate('Array.from(document.querySelectorAll("[data-writing-mode]")).every(b => b.disabled)'));
+    checks.writingModeLockedDuringRecording = true;
     checks.recordingKeys = globalShortcut.isRegistered('B') && globalShortcut.isRegistered('E'); assert.ok(checks.recordingKeys);
     await delay(1000); await ipc('recording:toggle');
     await until(async () => ['done', 'error'].includes((await ipc('snapshot')).value.state.stage));

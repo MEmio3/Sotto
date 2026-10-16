@@ -21,3 +21,18 @@
 @media(max-width:720px){.nav-item{font-size:0}.page-heading p{font-size:12px}.status-pill{font-size:10px}.quiet-text{font-size:10px}.language-label{font-size:11px}.language-label select{font-size:11px}.instrument-hints{font-size:10px}.typed-test summary{font-size:11px}.app-footer{font-size:9px}.field-note{font-size:10px}.setting-row select{font-size:11px;max-width:135px}.setting-row small{font-size:11px}.settings-save .button{font-size:11px}.history-toolbar>select{font-size:11px}.button.small{padding:10px 14px}}
 
 #google-model-form>label{display:grid;gap:8px}#google-model-summary{margin-bottom:16px;overflow-wrap:anywhere}#google-model-select{width:100%;max-width:none;min-height:42px;font-size:14px}
+
+.writing-mode-section{margin:0 0 24px}
+.writing-mode-heading{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-bottom:12px}
+.writing-mode-heading h2{font-size:13px;font-weight:650;margin:0;letter-spacing:0}
+.writing-mode-heading>span{font-size:11px;color:#666}
+.writing-modes{display:flex;flex-wrap:wrap;gap:8px}
+.writing-mode-button{min-height:40px;padding:9px 17px;border:1px solid #d2d2d2;border-radius:999px;background:#fff;color:#191919;font:inherit;font-size:12px;font-weight:550;cursor:pointer;transition:background-color .15s ease,color .15s ease}
+.writing-mode-button:hover{background:#ebebeb}
+.writing-mode-button.selected{background:#191919;border-color:#191919;color:#fff}
+.writing-mode-button.selected:hover{background:#3c3c3c}
+.writing-mode-button:focus-visible{outline:2px solid #777;outline-offset:3px}
+.writing-mode-button:disabled{opacity:.55;cursor:not-allowed}
+#writing-mode-description{margin:10px 0 0;color:#666;font-size:12px;line-height:1.6;min-height:1.6em}
+@media(max-width:720px){.writing-mode-button{padding:9px 13px}.writing-mode-heading>span{font-size:10px}.writing-mode-section{margin-bottom:20px}}
+@media(prefers-reduced-motion:reduce){.writing-mode-button{transition:none}}

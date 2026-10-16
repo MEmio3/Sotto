@@ -1,5 +1,15 @@
 # Sotto verification
 
+## v0.1.2 writing modes
+
+- Twenty automated tests passed, including style-specific instructions, Prompting's no-answer/no-invented-requirements rules, language/meaning/JSON safeguards, persisted mode selection, and Precise defaults for existing profiles.
+- Source desktop smoke passed at `.test-data/run-1792168855257/smoke.json`. It selects every mode through the actual controls, checks the outbound mock-provider instruction and saved history mode, verifies persistence and invalid-mode rejection, and blocks changes while recording. Desktop and compact stress layouts have no horizontal overflow.
+- Independent Impeccable finish review: **ship**, no material findings. The reviewer confirmed type, monochrome materials, placement, visible selection, help text, compact reflow and behavior.
+- Real-provider checks on Gemini 3.8 Flash Low returned distinct appropriate edits for all five modes using synthetic public text. Prompting returned a binary-search teaching prompt with the requested beginner audience, short Python example and no-recursion constraint; it did not answer the task. No user recordings or dictation history were sent for these checks, and the saved user profile was not modified.
+- The finished portable executable passed the same desktop checks at `.test-data/run-1792169270911/smoke.json`, including all five modes, retained language settings and the account model picker. Build size: 91,673,989 bytes. SHA-256: `1a4663ae655838d38eeb3d1f2257f64aa1c08fe229054118e5adcd582f3646e5`.
+- Cursor insertion was not changed in this release. The user confirmed successful automatic paste into Discord before mode implementation. Native Unicode/clipboard/focus checks from the baseline remain applicable.
+
+
 ## v0.1.1 Google connection and model picker
 
 - 18 automated tests passed, including the exact empty-project-object regression, correct Antigravity client headers, bounded asynchronous onboarding, dynamic model IDs and step-specific error handling.

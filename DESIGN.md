@@ -198,6 +198,19 @@ components:
   navigation-selected:
     backgroundColor: "{colors.nav-selected}"
     textColor: "{colors.ink}"
+  writing-mode:
+    backgroundColor: "{colors.white}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.capsule}"
+    padding: "9px 17px"
+    height: "40px"
+  writing-mode-hover:
+    backgroundColor: "{colors.secondary-hover}"
+  writing-mode-selected:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.white}"
+  writing-mode-selected-hover:
+    backgroundColor: "{colors.primary-hover}"
   status-pill:
     backgroundColor: "{colors.status-surface}"
     textColor: "{colors.status-text}"
@@ -341,6 +354,24 @@ Actions are quiet, compact capsules. Primary buttons are dark on the workspace; 
 Hover changes the background. Pressed capsule actions scale to (.98). Focus-visible uses the Focus outline (2px) with an offset (4px); disabled buttons have opacity (.45) and a not-allowed cursor. Dark-outline Cancel retains its outline treatment. Small actions use less horizontal padding (14px) in the narrow preview.
 
 Text actions have no filled surface, use secondary text, and darken on hover; their minimum height is (28px). Circular icon actions are (33px) square with a pale hover fill. Do not enlarge these facts into a claim that every existing target is 44px.
+
+### Writing Modes
+
+Five visible capsules sit between the language controls and recording instrument, in this order: Constructive, Precise, Professional, Prompting, Casual. They extend the existing monochrome capsule language without adding a surrounding card or selection shadow. The desktop and compact specimens are recorded in `.impeccable/review/modes/desktop.png` and `compact.png`.
+
+Unselected modes use White, Ink, and a thin Secondary Stroke border (1px). The selected mode reverses to Ink with White text and an Ink border; hover uses the corresponding frontmatter variant. Labels use Manrope (12px, weight 550). The component height is a minimum (40px). Focus-visible uses the shared Focus outline (2px) with an offset (3px); disabled modes use opacity (.55) and a not-allowed cursor. Background and text transitions take (.15s, ease), removed for reduced-motion preference.
+
+The section heading is compact (13px, weight 650), paired with the quiet note “For your next dictation or rework” (11px). The controls use a wrapping row with the Close gap. A single Secondary Text helper sentence (12px, line-height 1.6) sits below, with top spacing (10px) and a reserved minimum line (1.6em). The heading can wrap as well. At the narrow breakpoint (720px), horizontal capsule padding becomes (13px), the note becomes (10px), and the section's bottom space becomes (20px), from Large on desktop. Keep all five choices visible as they wrap; the compact specimen shows three capsules followed by two.
+
+The group is named by “Writing mode” and described by its helper. Each real button exposes `aria-pressed`; selection updates the helper as a polite status message. Use the shipped descriptions:
+
+- **Constructive:** Helpful, considerate wording that makes feedback easier to act on.
+- **Precise:** Direct, concise wording with every important detail intact.
+- **Professional:** Clear, respectful language for work and formal conversations.
+- **Prompting:** Turn your thought into a clear instruction for another AI.
+- **Casual:** Relaxed, natural wording for everyday messages.
+
+Precise is the default; choosing a mode saves it for the next dictation, typed-text polish, or history rework. Capsules are disabled while saving a selection and throughout opening the microphone, recording, transcribing, polishing, and inserting, so a running job retains its mode. Finished-result metadata displays the saved mode as a badge alongside language. The floating recorder's polishing note reads “[Mode] writing”; its language tooltip also includes the mode. Prompting produces the prompt itself without answering or executing it, and all modes preserve a faithful original transcript.
 
 ### Status Pills / Badges
 

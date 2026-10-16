@@ -10,7 +10,7 @@ Speak in Bangla, English, or a mix of languages. Turn rough thoughts into polish
 
 **Windows desktop · Portable executable · Bring your own AI · MIT licensed**
 
-[**Download for Windows ↓**](https://github.com/MEmio3/Sotto/releases/download/v0.1.1/Sotto-0.1.1-Windows.exe) · [All releases](https://github.com/MEmio3/Sotto/releases) · [Report an issue](https://github.com/MEmio3/Sotto/issues)
+[**Download for Windows ↓**](https://github.com/MEmio3/Sotto/releases/download/v0.1.2/Sotto-0.1.2-Windows.exe) · [All releases](https://github.com/MEmio3/Sotto/releases) · [Report an issue](https://github.com/MEmio3/Sotto/issues)
 
 <img src="docs/Sotto.png" alt="Sotto's black-and-white desktop interface with dictation, history, connections and settings" width="1100">
 
@@ -27,6 +27,7 @@ The built-in prompt treats your speech as something to edit: it fixes grammar, p
 | Feature | What it does |
 | --- | --- |
 | **Dictation at your cursor** | A global shortcut starts and stops recording. Sotto checks the original destination before inserting. |
+| **Five writing modes** | Choose Constructive, Precise, Professional, Prompting or Casual before dictating or reworking text. |
 | **Bangla, English, and more** | Use keyboard language shortcuts, select a language, or say which language you want. Support depends on your model. |
 | **Floating recorder** | A compact monochrome capsule shows the timer, language, microphone activity and processing state without taking typing focus. |
 | **Your choice of AI** | Connect a Gemini API key, a compatible API, or the experimental Google / Antigravity connection. Use **Models** to pick a Flash variant returned by your Google account. |
@@ -41,7 +42,7 @@ The built-in prompt treats your speech as something to edit: it fixes grammar, p
 
 ## Get started
 
-1. Download [**Sotto-0.1.1-Windows.exe**](https://github.com/MEmio3/Sotto/releases/download/v0.1.1/Sotto-0.1.1-Windows.exe) and open it on Windows x64. The portable build needs no Node.js, browser extension, OmniRoute server or Antigravity installation.
+1. Download [**Sotto-0.1.2-Windows.exe**](https://github.com/MEmio3/Sotto/releases/download/v0.1.2/Sotto-0.1.2-Windows.exe) and open it on Windows x64. The portable build needs no Node.js, browser extension, OmniRoute server or Antigravity installation.
 2. Open **Connections → Add API**. Choose **Gemini API**, enter your key, discover available models, and save a connection. You can get a key from [Google AI Studio](https://aistudio.google.com/apikey).
 3. Select a model and click **Test**. This checks text generation; the first real dictation checks audio support. Discovery prefers Flash-Lite, then Flash, when available. You control the model and provider.
 4. Click a textbox in your browser, editor or messaging app. Press **Ctrl + P**, speak, then press **Ctrl + P** again.
@@ -50,6 +51,22 @@ The built-in prompt treats your speech as something to edit: it fixes grammar, p
 Closing the window keeps Sotto in the system tray. Choose **Quit** from the tray menu to exit and release its shortcuts.
 
 **Updating from v0.1.0:** quit the old app from the tray before opening the new executable. Your saved connections and history use the same local profile. In **Connections → Models**, load the account's models, choose one and click **Use model**, then **Test**. The new connector repairs invalid project values saved by v0.1.0.
+
+### Writing modes
+
+Choose a capsule under **Writing mode** on the Dictation page. The choice is saved and applies to new recordings, typed text and **Rework**. It cannot change during an active dictation. **Precise** is the default for existing profiles.
+
+| Mode | How it writes |
+| --- | --- |
+| **Constructive** | Makes feedback considerate and actionable, without inventing suggestions. |
+| **Precise** | Direct, concise wording that keeps important details. |
+| **Professional** | Clear, respectful wording for work and formal messages. |
+| **Prompting** | Turns your speech into a clear AI prompt, without answering it or adding requirements. |
+| **Casual** | Relaxed, natural messages without added slang or emojis. |
+
+Every mode preserves your selected language, names, numbers and meaning. Saved results show the mode used; older results remain available.
+
+<img src="docs/Writing-modes.png" alt="Five writing-mode capsules above the Sotto recorder, with Precise selected; synthetic example data" width="1100">
 
 ### Shortcuts and language
 
@@ -135,17 +152,17 @@ npm start
 | `npm run smoke` | Run isolated desktop checks using simulated audio and a local mock provider. |
 | `npm run preview` | Serve a UI-only preview at `http://127.0.0.1:4317`. |
 | `npm run pack` | Build the unpacked Windows app. |
-| `npm run dist` | Create `release/Sotto-0.1.1-Windows.exe`. |
+| `npm run dist` | Create `release/Sotto-0.1.2-Windows.exe`. |
 
 The release build is unsigned. Icons and fonts are already bundled; regenerating assets with `python scripts/assets.py` additionally requires Pillow.
 
 The source is small: `electron/` contains the desktop lifecycle, providers, storage and IPC; `native/` handles Windows focus and insertion; `src/` holds the main interface and floating recorder; `tests/` covers prompts, provider responses, storage and native request handling.
 
-**Verification:** 18 automated tests passed, including Google project parsing, onboarding and request headers. Desktop checks cover model selection, saving and retry after discovery errors. Native Unicode paste, clipboard restoration and focus protection were separately verified. Short real-provider text/audio checks passed; broad recognition accuracy remains unverified. See [verification notes](docs/VERIFICATION.md).
+**Verification:** 20 automated tests passed, including writing-mode instructions, persistence and legacy-profile defaults, plus Google project parsing, onboarding and request headers. Desktop checks cover model selection, saving and retry after discovery errors. Native Unicode paste, clipboard restoration and focus protection were separately verified. Short real-provider text/audio checks passed; broad recognition accuracy remains unverified. See [verification notes](docs/VERIFICATION.md).
 
-## Coming later
+## Custom presets, later
 
-Writing modes for **AI prompts**, **casual messages**, **professional writing** and **custom presets**, each with its own built-in editing prompt. These are planned and are not included in v0.1.1. For now, use **Settings → Your writing preferences** to guide the tone.
+Custom writing presets are planned. The five built-in modes are available now; **Settings → Your writing preferences** adds your own style guidance.
 
 ## Credits and license
 

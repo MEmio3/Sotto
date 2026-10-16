@@ -29,7 +29,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <div class="shortcut-note"><span class="tiny-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span>Always a shortcut away.</span></div>
         <div class="key-combo" id="sidebar-hotkey"><kbd>Ctrl</kbd><span>+</span><kbd>P</kbd></div>
         <button class="account-button" id="account-button"><span class="account-icon" data-icon="circle"></span><span><strong id="account-label">Make a connection</strong><small id="account-subtitle">Bring your preferred AI</small></span><span data-icon="arrow"></span></button>
-        <div class="sidebar-foot"><span>History on this device</span><span id="version">v0.1.1</span></div>
+        <div class="sidebar-foot"><span>History on this device</span><span id="version">v0.1.2</span></div>
       </div>
     </aside>
     <div class="window-body">
@@ -38,6 +38,17 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <section id="page-dictation" class="page">
           <div class="page-heading"><div><h1>Your voice.<br><span class="subtle-heading">Well put.</span></h1><p>Speak naturally. Let the words fall into place.</p></div><div class="heading-aside"><span class="status-pill" id="connection-status"><span class="status-dot"></span>Connect to get started</span><button class="button secondary small" id="quick-connect"><span data-icon="plus"></span>Add API</button></div></div>
           <div class="workspace-options"><label class="language-label" for="output-language">Write in <select id="output-language" aria-label="Output language"><option value="">English · default</option><option>Bangla</option><option>English</option><option>Same as speech</option><option>Arabic</option><option>Hindi</option><option>Spanish</option><option>French</option><option>German</option><option>Japanese</option><option>Chinese</option><option>Korean</option><option>Portuguese</option><option>Urdu</option></select></label><span class="quiet-text" id="smart-language-label"><span data-icon="spark"></span>Spoken language cues on</span></div>
+          <section class="writing-mode-section" aria-labelledby="writing-mode-label">
+            <div class="writing-mode-heading"><h2 id="writing-mode-label">Writing mode</h2><span>For your next dictation or rework</span></div>
+            <div id="writing-modes" class="writing-modes" role="group" aria-labelledby="writing-mode-label" aria-describedby="writing-mode-description">
+              <button type="button" class="writing-mode-button" data-writing-mode="constructive" aria-pressed="false">Constructive</button>
+              <button type="button" class="writing-mode-button selected" data-writing-mode="precise" aria-pressed="true">Precise</button>
+              <button type="button" class="writing-mode-button" data-writing-mode="professional" aria-pressed="false">Professional</button>
+              <button type="button" class="writing-mode-button" data-writing-mode="prompting" aria-pressed="false">Prompting</button>
+              <button type="button" class="writing-mode-button" data-writing-mode="casual" aria-pressed="false">Casual</button>
+            </div>
+            <p id="writing-mode-description" role="status" aria-live="polite">Direct, concise wording with every important detail intact.</p>
+          </section>
           <div class="recording-instrument" id="instrument">
             <div class="instrument-top"><span class="instrument-status" id="recording-label"><span class="status-dot"></span>READY WHEN YOU ARE</span><span class="timer" id="timer">00:00</span></div>
             <div class="waveform" id="waveform" aria-hidden="true"></div>

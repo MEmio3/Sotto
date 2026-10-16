@@ -23,7 +23,7 @@ function render(state) {
   const labels = { starting: 'Getting ready', recording: 'Listening', transcribing: 'Transcribing', polishing: 'Polishing', inserting: 'Inserting', done: state.result?.insertion === 'inserted' ? 'Inserted' : 'Ready to copy', error: 'Needs attention', cancelled: 'Cancelled' };
   $('label').textContent = labels[state.stage] || 'Sotto';
   $('language').textContent = language;
-  $('language').title = language;
+  $('language').title = `${language} · ${state.writingModeLabel || 'Precise'}`;
   $('elapsed').classList.toggle('hidden', !listening);
   $('key-hint').classList.toggle('hidden', !(listening && state.languageKeys));
   $('language').classList.toggle('hidden', !listening && state.stage !== 'done');
@@ -31,7 +31,7 @@ function render(state) {
   if (listening && !state.languageKeys) note = state.spokenLanguage ? 'Spoken cues on' : 'Speak naturally';
   else if (state.stage === 'starting') note = 'Opening your microphone';
   else if (state.stage === 'transcribing') note = 'Turning speech into text';
-  else if (state.stage === 'polishing') note = 'Keeping your meaning';
+  else if (state.stage === 'polishing') note = `${state.writingModeLabel || 'Precise'} writing`;
   else if (state.stage === 'inserting') note = 'At your original cursor';
   else if (state.stage === 'done') note = state.result?.uncertain?.length ? 'Review a few words' : state.result?.insertion === 'inserted' ? 'At your cursor' : 'Your words are ready';
   else if (state.stage === 'error') note = /usage limit|quota/i.test(state.message || '') ? 'Provider limit reached' : /microphone/i.test(state.message || '') ? 'Check your microphone' : state.canRetry ? 'Saved and ready to retry' : 'Open Sotto for details';
