@@ -102,7 +102,7 @@ function renderState() {
   $('account-label').textContent = connection?.name || 'Make a connection';
   $('account-subtitle').textContent = connection ? connection.type === 'antigravity' ? 'Google account · experimental' : 'Direct API connection' : 'Bring your preferred AI';
   $('history-count').textContent = data.history.length;
-  $('version').textContent = `v${data.version || '0.1.0'}`;
+  $('version').textContent = `v${data.version || '0.1.1'}`;
   if (!active()) setLevel(.05);
   renderLatest();
 }
@@ -137,12 +137,12 @@ $('export-history').onclick = action(async () => { if (await call('history:expor
 
 function renderConnections() {
   if (!data.connections.length) $('connection-list').innerHTML = `<div class="connection-placeholder"><span class="provider-icon">${icon('plug')}</span><div><h2>One connection. A lot less typing.</h2><p>Add a Gemini key, use a compatible API, or try connecting your Google account below.</p></div></div>`;
-  else $('connection-list').innerHTML = data.connections.map(c => `<article class="connection-row"><span class="provider-icon">${icon(c.type === 'antigravity' ? 'globe' : c.type === 'gemini' ? 'spark' : 'plug')}</span><div class="connection-info"><h2>${esc(c.name)}${c.id === data.activeId ? '<span class="badge">Selected</span>' : ''}</h2><p>${esc(c.model || 'Select a model')}${c.verifiedAt ? ` · Text verified${c.latency ? ` · ${(c.latency / 1000).toFixed(1)}s` : ''}` : ' · Access untested'}${c.experimental ? ' · Experimental' : ''}</p></div><div class="connection-actions"><button class="text-button" data-test="${esc(c.id)}" ${connectionBusy.has(c.id) || !c.model ? 'disabled' : ''}>${icon('check')}${connectionBusy.has(c.id) ? 'Testing…' : 'Test'}</button>${c.id !== data.activeId ? `<button class="button secondary small" data-select="${esc(c.id)}">Use</button>` : ''}<button class="icon-button" data-edit="${esc(c.id)}" aria-label="Edit ${esc(c.name)}">${icon('edit')}</button><button class="icon-button" data-remove="${esc(c.id)}" aria-label="Remove ${esc(c.name)}">${icon('trash')}</button></div></article>`).join('');
+  else $('connection-list').innerHTML = data.connections.map(c => `<article class="connection-row"><span class="provider-icon">${icon(c.type === 'antigravity' ? 'globe' : c.type === 'gemini' ? 'spark' : 'plug')}</span><div class="connection-info"><h2>${esc(c.name)}${c.id === data.activeId ? '<span class="badge">Selected</span>' : ''}</h2><p>${esc(c.model || (c.type === 'antigravity' ? 'Signed in · Choose a model' : 'Select a model'))}${c.verifiedAt ? ` · Text verified${c.latency ? ` · ${(c.latency / 1000).toFixed(1)}s` : ''}` : c.model ? ' · Access untested' : ''}${c.experimental ? ' · Experimental' : ''}</p></div><div class="connection-actions"><button class="text-button" data-test="${esc(c.id)}" ${connectionBusy.has(c.id) || !c.model ? 'disabled' : ''}>${icon('check')}${connectionBusy.has(c.id) ? 'Testing…' : 'Test'}</button>${c.id !== data.activeId ? `<button class="button secondary small" data-select="${esc(c.id)}">Use</button>` : ''}<button class="${c.type === 'antigravity' ? 'button secondary small' : 'icon-button'}" data-edit="${esc(c.id)}" aria-label="${c.type === 'antigravity' ? 'Choose model for' : 'Edit'} ${esc(c.name)}">${c.type === 'antigravity' ? 'Models' : icon('edit')}</button><button class="icon-button" data-remove="${esc(c.id)}" aria-label="Remove ${esc(c.name)}">${icon('trash')}</button></div></article>`).join('');
   $('connection-list').querySelectorAll('[data-select]').forEach(button => button.onclick = action(() => call('connection:select', button.dataset.select)));
   $('connection-list').querySelectorAll('[data-remove]').forEach(button => button.onclick = action(() => call('connection:delete', button.dataset.remove)));
   $('connection-list').querySelectorAll('[data-edit]').forEach(button => button.onclick = action(async () => {
     const c = data.connections.find(item => item.id === button.dataset.edit);
-    if (c.type === 'antigravity') { const list = await busy(button, '…', () => call('connection:models', c.id)); if (!list.length) throw new Error('Google returned no available Flash models.'); const chosen = list.find(m => /flash-lite/i.test(m.id)) || list[0]; await call('connection:model', { connectionId: c.id, model: chosen.id }); toast(`Selected ${chosen.id}. Test to verify access.`); }
+    if (c.type === 'antigravity') { openGoogleModels(c); await findGoogleModels(); }
     else openApi(c);
   }));
   $('connection-list').querySelectorAll('[data-test]').forEach(button => button.onclick = action(async () => {
@@ -151,6 +151,47 @@ function renderConnections() {
     finally { connectionBusy.delete(connectionId); renderConnections(); }
   }));
 }
+function setGoogleModels(list, current = '') {
+  const chosen = list.find(m => m.id === current) || list.find(m => /flash-lite/i.test(m.id)) || list[0];
+  $('google-model-select').innerHTML = list.length ? list.map(m => `<option value="${esc(m.id)}" ${m.id === chosen.id ? 'selected' : ''}>${esc(m.name)} · ${esc(m.id)}</option>`).join('') : '<option value="">No models loaded</option>';
+  $('google-model-select').disabled = !list.length; $('google-use-model').disabled = !list.length;
+  if (list.length) $('google-model-message').textContent = `Found ${list.length} Flash models from Google. Choose one, then use Test to verify access.`;
+}
+function openGoogleModels(connection, list = []) {
+  navigate('connections'); $('api-form').classList.add('hidden'); $('google-model-form').classList.remove('hidden');
+  $('google-model-connection').value = connection.id;
+  $('google-model-summary').textContent = `Signed in as ${connection.name}. These models come from your account, rather than a preset list.`;
+  $('google-model-message').textContent = connection.setupError || 'Finding the Flash models available to this account.';
+  setGoogleModels(list, connection.model);
+  $('google-model-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+async function findGoogleModels() {
+  const id = $('google-model-connection').value;
+  if (!id) return;
+  $('google-model-message').textContent = 'Checking your Google model access…';
+  setGoogleModels([]);
+  try {
+    await busy($('google-find-models'), 'Finding models…', async () => {
+      const list = await call('connection:models', id);
+      if ($('google-model-connection').value !== id) return;
+      const c = data.connections.find(item => item.id === id);
+      setGoogleModels(list, c?.model);
+      if (!list.length) $('google-model-message').textContent = 'Google returned no Flash models for this account. Retry later or use an API connection.';
+    });
+  } catch (error) { if ($('google-model-connection').value === id) $('google-model-message').textContent = error.message; }
+}
+$('google-find-models').onclick = action(findGoogleModels);
+$('close-google-models').onclick = () => { $('google-model-form').classList.add('hidden'); $('google-model-connection').value = ''; };
+$('google-model-form').onsubmit = action(async event => {
+  event.preventDefault(); const id = $('google-model-connection').value, model = $('google-model-select').value;
+  if (!id || !model) return;
+  await busy($('google-use-model'), 'Saving…', async () => {
+    await call('connection:model', { connectionId: id, model });
+    await call('connection:select', id);
+    $('google-model-message').textContent = `Selected ${model}. Use Test above to verify text generation.`;
+    $('google-message').textContent = ''; toast('Google model selected. Test the connection to verify access.');
+  });
+});
 function apiType(type) {
   $('api-type').value = type;
   document.querySelectorAll('[data-api-type]').forEach(button => button.classList.toggle('selected', button.dataset.apiType === type));
@@ -158,6 +199,7 @@ function apiType(type) {
   $('gemini-key-link').classList.toggle('hidden', type !== 'gemini');
 }
 function openApi(connection) {
+  $('google-model-form').classList.add('hidden'); $('google-model-connection').value = '';
   navigate('connections'); $('api-form').classList.remove('hidden'); $('api-form').reset();
   $('api-id').value = connection?.id || ''; apiType(connection?.type || 'gemini');
   $('api-name').value = connection?.name || 'My Gemini'; $('api-url').value = connection?.baseUrl || 'https://generativelanguage.googleapis.com/v1beta';
@@ -188,7 +230,7 @@ $('api-model').oninput = () => { $('api-form-message').textContent = 'Save your 
 $('get-gemini-key').onclick = action(() => call('link', 'gemini'));
 $('connect-google').onclick = action(async () => {
   $('cancel-google').classList.remove('hidden'); $('google-message').textContent = 'Finish signing in through your browser. Sotto will then check the account’s model access.';
-  try { await busy($('connect-google'), 'Waiting for Google…', async () => { const result = await call('google:connect'); $('google-message').textContent = result.warning; }); }
+  try { await busy($('connect-google'), 'Waiting for Google…', async () => { const result = await call('google:connect'); $('google-message').textContent = result.warning; if (result.connection) openGoogleModels(result.connection, result.models || []); }); }
   catch (e) { $('google-message').textContent = e.message; }
   finally { $('cancel-google').classList.add('hidden'); }
 });

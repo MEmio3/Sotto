@@ -70,7 +70,7 @@ async function transcribeLocal(settings, filename, signal) {
   });
 }
 async function models(connection, secret, google) {
-  if (connection.type === 'antigravity') return google.models(secret);
+  if (connection.type === 'antigravity') return google.models(secret, connection.id);
   const base = safeBaseUrl(connection.baseUrl || 'https://generativelanguage.googleapis.com/v1beta');
   const response = await request(`${base}/models`, { headers: connection.type === 'gemini' ? { 'x-goog-api-key': secret.apiKey } : secret.apiKey ? { Authorization: `Bearer ${secret.apiKey}` } : {} }, null, 20000);
   const data = await response.json();

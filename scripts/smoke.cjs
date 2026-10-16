@@ -2,6 +2,7 @@ const path = require('node:path');
 const fs = require('node:fs');
 const { spawn } = require('node:child_process');
 const directory = path.join(__dirname, '..', '.test-data', `run-${Date.now()}`); fs.mkdirSync(directory, { recursive: true });
+if (process.env.SOTTO_TEST_HOTKEY) fs.writeFileSync(path.join(directory, 'settings.json'), JSON.stringify({ settings: { hotkey: process.env.SOTTO_TEST_HOTKEY }, connections: [], activeId: null }));
 const env = { ...process.env, SOTTO_SMOKE_TEST: '1', SOTTO_TEST_DATA: directory }; delete env.ELECTRON_RUN_AS_NODE;
 const executable = process.env.SOTTO_EXECUTABLE || require('electron');
 const child = spawn(executable, process.env.SOTTO_EXECUTABLE ? [] : ['.'], { cwd: path.join(__dirname, '..'), env, stdio: 'inherit', windowsHide: true });

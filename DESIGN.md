@@ -362,6 +362,8 @@ White fields have a thin Field Stroke border, the field radius, internal padding
 
 Search is a specific low-chrome variant with an underline and transparent input, not a second general form style. Password fields include an inset circular visibility button. API discovery and save actions expose busy labels and disabled states; explanatory messages remain adjacent to the form.
 
+Google connections expose a visible **Models** capsule action. Its inline picker shares the API form layout, with a full-width native select (14px, minimum height 42px), an adjacent discovery/recovery message and **Find models** / **Use model** actions. The list comes from live account discovery; loading, empty and error states disable saving. Using a model saves that exact ID and selects its connection for dictation. The form scrolls into view when opened and remains available for retry after a failed request.
+
 ### Navigation
 
 The dark rail uses full-width capsule items with a line icon and text. The selected item has a pale fill and dark text; hover stays within grayscale. Current-page semantics are updated with navigation. Preserve the main navigation's accessible name and keyboard focus behavior when adding destinations.

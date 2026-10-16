@@ -18,7 +18,7 @@ Record with a global shortcut, accurately rewrite speech, and paste the result a
 Windows desktop; browser forms, editors and chats; a tray app and nonactivating recording indicator. Ctrl+P is the requested default and must be configurable.
 
 ## Capabilities and Constraints
-User-owned API connections, local searchable history, original transcript alongside final text, observable connection and recording states. Audio capability differs by provider. Network access and user credentials are required for cloud processing. Actual credentials have not been supplied. Google OAuth account access must be represented honestly and tested before showing Ready. No accuracy or latency guarantees.
+User-owned API connections, local searchable history, original transcript alongside final text, observable connection and recording states. Audio capability differs by provider. Network access and user credentials are required for cloud processing. v0.1.1 has verified real Google account discovery and a short synthetic English audio sample; credentials stay local and are not bundled. Google OAuth account access must be represented honestly and tested before showing Ready. The Connections model picker uses the account's live catalog and saves an explicit selection. No accuracy or latency guarantees.
 
 ## Brand Commitments
 Black and white, classy, capsule buttons, a clear account of what the app is doing. Working name Sotto is an implementation assumption; no existing brand assets.

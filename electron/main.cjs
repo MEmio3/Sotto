@@ -188,10 +188,20 @@ function installHandlers() {
     store.save(); changed();
   });
   handle('connection:models', async connectionId => {
+    if (activeStages.includes(state.stage)) throw new Error('Finish the current dictation before checking models.');
     const c = store.config.connections.find(c => c.id === connectionId); if (!c) throw new Error('Save the connection first.');
     const secret = store.secret(c.id);
-    if (c.type === 'antigravity') await google.token(secret, c.id);
-    return providers.models(c, secret, google);
+    try {
+      const choices = await providers.models(c, secret, google);
+      if (c.type === 'antigravity') { c.projectRequired = false; c.setupError = ''; store.save(); changed(); }
+      return choices;
+    } catch (error) {
+      if (c.type === 'antigravity') {
+        c.projectRequired = error.code === 'GOOGLE_PROJECT_REQUIRED'; c.setupError = redact(error.message, [secret.accessToken, secret.refreshToken]);
+        c.verifiedAt = null; store.save(); changed();
+      }
+      throw error;
+    }
   });
   handle('connection:model', ({ connectionId, model }) => {
     if (activeStages.includes(state.stage)) throw new Error('Finish the current dictation before changing models.');
@@ -213,11 +223,15 @@ function installHandlers() {
     store.setSecret(c.id, secret); store.config.connections.push(c); store.save(); changed();
     try {
       await google.discover(secret); store.setSecret(c.id, secret);
-      const choices = await google.models(secret); c.model = selectFastModel(choices)?.id || '';
+      const choices = await google.models(secret, c.id); c.model = selectFastModel(choices)?.id || '';
       if (!store.config.activeId && c.model) store.config.activeId = c.id;
       store.save(); changed();
       return { connection: c, models: choices, warning: c.model ? 'Signed in. Test the connection to verify model access. Audio support is not yet verified.' : 'Signed in, but no Flash models were returned. Add an API connection to continue.' };
-    } catch (e) { return { connection: c, warning: redact(e.message, [secret.accessToken, secret.refreshToken]) }; }
+    } catch (e) {
+      c.projectRequired = e.code === 'GOOGLE_PROJECT_REQUIRED'; c.setupError = redact(e.message, [secret.accessToken, secret.refreshToken]);
+      store.setSecret(c.id, secret); store.save(); changed();
+      return { connection: c, warning: c.setupError };
+    }
   });
   handle('google:cancel', () => google.cancelLogin?.());
   handle('history:delete', entryId => { if (store.history.find(e => e.id === entryId)?.status === 'processing') throw new Error('Finish or cancel this dictation before deleting it.'); store.deleteHistory(entryId); changed(); });
@@ -257,7 +271,7 @@ if (locked) app.whenReady().then(() => {
     tray.setContextMenu(Menu.buildFromTemplate([{ label: 'Open Sotto', click: () => show() }, { label: 'Start / stop dictation', click: () => toggleRecording().catch(fail) }, { label: 'Cancel dictation', click: cancel }, { type: 'separator' }, { label: 'Quit Sotto', click: () => { quitting = true; app.quit(); } }]));
     tray.on('double-click', () => show()); tray.setToolTip('Sotto · Ready when you are');
     try { bindHotkey(store.config.settings.hotkey); } catch (e) { win.webContents.once('did-finish-load', () => send('notice', e.message)); }
-    if (process.env.SOTTO_SMOKE_TEST === '1') win.webContents.once('did-finish-load', () => require('./smoke.cjs').run({ win, hud, store, desktop, app, globalShortcut, clipboard, directory: process.env.SOTTO_TEST_DATA }));
+    if (process.env.SOTTO_SMOKE_TEST === '1') win.webContents.once('did-finish-load', () => require('./smoke.cjs').run({ win, hud, store, desktop, google, app, globalShortcut, clipboard, directory: process.env.SOTTO_TEST_DATA }));
   } catch (e) { dialog.showErrorBox('Sotto could not start', redact(e.message)); quitting = true; app.quit(); }
 });
 app.on('before-quit', () => { quitting = true; controller?.abort(); google?.cancelLogin?.(); globalShortcut.unregisterAll(); desktop?.close(); });

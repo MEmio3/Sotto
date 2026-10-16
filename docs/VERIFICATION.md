@@ -1,4 +1,16 @@
-# Sotto 0.1.0 verification
+# Sotto verification
+
+## v0.1.1 Google connection and model picker
+
+- 18 automated tests passed, including the exact empty-project-object regression, correct Antigravity client headers, bounded asynchronous onboarding, dynamic model IDs and step-specific error handling.
+- Source desktop smoke passed at `.test-data/run-1792166315500/smoke.json`. New checks exercise model discovery failure, retry, choosing an exact model ID, saving it, and layout at the 900px desktop minimum width. Screenshots use an isolated example account and mock provider.
+- Packaged desktop smoke passed at `.test-data/run-1792166644419/smoke.json`, including selecting the connection when **Use model** is clicked. The final compact-width inspection confirmed that the picker and its save/retry controls stay in view.
+- The finished portable executable passed the same desktop checks at `.test-data/run-1792166864337/smoke.json`. Build size: 91,670,170 bytes. SHA-256: `453b57ff56757317254785dbbbf98aa1ba4490d79d45ca31b9728c92348e231c`.
+- A real Google account returned 22 catalog entries, including 13 Gemini Flash variants. The account's actual project was discovered with the corrected client protocol; no manually supplied Cloud project was necessary for that account.
+- Text editing succeeded on Gemini 3.5 Flash Lite and Gemini 2.5 Flash Lite. A synthetic English WAV saying “Please send the revised drawings tomorrow” was transcribed and polished correctly on Gemini 2.5 Flash Lite and Gemini 3.8 Flash Low. These checks used the saved session only in memory, did not read or send user dictation history, and did not modify the saved user profile.
+- Model availability and sample success do not establish universal account eligibility, all-language accuracy, arbitrary audio support or stable latency. The Google connection remains experimental; its sign-in flow still lacks PKCE.
+
+## v0.1.0 baseline
 
 ## Floating recorder review
 
@@ -21,6 +33,6 @@ The recorder now uses a 438 × 104 transparent native window with a 398 × 64 ca
 - The finished portable `release/Sotto-0.1.0-Windows.exe` also passed the desktop smoke: `.test-data/run-1792163081814/smoke.json`. Build size: 91,670,725 bytes. SHA-256: `6AE052568DCD5905C3F753E4DF85559284C82B738D9591D75D4E6A365D5B8B03`.
 - Native Unicode and multiline insertion was separately verified against Sotto's own test textbox: `.test-data/run-1792161026335/smoke.json`. The report confirms Ctrl+V, no Enter key, clipboard restoration and focus protection. Subsequent smoke runs skip that foreground-dependent check.
 
-## Limits of verification
+## Original v0.1.0 verification limits
 
 No real Gemini key or Google account was supplied. Real microphone recognition accuracy, provider latency, billing and Google account eligibility/audio support have not been verified. The Google account connection remains experimental. The app keeps uncertain or focus-blocked results ready to copy rather than inserting them automatically.

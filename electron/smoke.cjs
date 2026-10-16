@@ -3,7 +3,7 @@ const path = require('node:path');
 const http = require('node:http');
 const assert = require('node:assert/strict');
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-async function run({ win, hud, store, desktop, app, globalShortcut, clipboard, directory }) {
+async function run({ win, hud, store, desktop, google, app, globalShortcut, clipboard, directory }) {
   const checks = {};
   const review = path.join(directory, 'screenshots'); fs.mkdirSync(review, { recursive: true });
   const evaluate = code => win.webContents.executeJavaScript(code, true);
@@ -68,6 +68,33 @@ async function run({ win, hud, store, desktop, app, globalShortcut, clipboard, d
     const credentials = fs.readFileSync(path.join(directory, 'credentials.json'), 'utf8');
     assert.ok(!credentials.includes('smoke-test-key-not-a-real-credential')); checks.windowsEncryption = true;
     await evaluate(`document.querySelector('[data-page="history"]').click()`); await capture('history');
+    const originalModels = google.models;
+    let discoveryFails = true;
+    const googleConnectionId = 'google-smoke-example';
+    store.config.connections.push({ id: googleConnectionId, name: 'Example Google account', type: 'antigravity', model: '', experimental: true });
+    store.setSecret(googleConnectionId, { accessToken: 'synthetic-smoke-session-not-real', expiresAt: Date.now() + 3600000 });
+    google.models = async (_secret, id) => {
+      assert.equal(id, googleConnectionId); await delay(120);
+      if (discoveryFails) { const error = new Error('Google rejected the model discovery request (HTTP 400). Retry setup or use an API connection.'); error.code = 'GOOGLE_REQUEST_REJECTED'; throw error; }
+      return [{ id: 'gemini-3.8-flash-low', name: 'Gemini 3.8 Flash Low' }, { id: 'gemini-3.8-flash-high', name: 'Gemini 3.8 Flash High' }];
+    };
+    await ipc('settings:save', store.config.settings);
+    await evaluate(`document.querySelector('[data-page="connections"]').click(); document.querySelector('[data-edit="${googleConnectionId}"]').click()`);
+    await until(() => evaluate(`document.getElementById('google-model-message').textContent.includes('HTTP 400')`));
+    assert.equal(await evaluate(`document.getElementById('google-use-model').disabled`), true);
+    await capture('google-recovery');
+    discoveryFails = false;
+    await evaluate(`document.getElementById('google-find-models').click()`);
+    await until(() => evaluate(`document.getElementById('google-model-select').options.length===2 && !document.getElementById('google-use-model').disabled`));
+    await capture('google-models');
+    await evaluate(`document.getElementById('google-model-select').value='gemini-3.8-flash-high'; document.getElementById('google-model-form').requestSubmit()`);
+    await until(async () => (await ipc('snapshot')).value.connections.find(c => c.id === googleConnectionId).model === 'gemini-3.8-flash-high');
+    await until(async () => (await ipc('snapshot')).value.activeId === googleConnectionId);
+    checks.googleModelPicker = true;
+    const sizeBeforeGoogle = win.getSize(); win.setSize(900, 700); await evaluate(`document.getElementById('google-model-form').scrollIntoView({block:'start',behavior:'instant'})`); await capture('google-models-compact');
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth')); checks.googleModelRecovery = true;
+    win.setSize(...sizeBeforeGoogle); google.models = originalModels;
+    store.deleteSecret(googleConnectionId); store.config.connections = store.config.connections.filter(c => c.id !== googleConnectionId); store.config.activeId = connectionId; store.save();
     if (process.env.SOTTO_SKIP_NATIVE === '1') {
       checks.nativePasteSkipped = 'Foreground-dependent paste was already verified separately; this run checks the remaining desktop regressions.';
       server.closeAllConnections(); server.close();
