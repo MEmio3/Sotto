@@ -1,0 +1,9 @@
+const path = require('node:path');
+const fs = require('node:fs');
+const { spawn } = require('node:child_process');
+const directory = path.join(__dirname, '..', '.test-data', `run-${Date.now()}`); fs.mkdirSync(directory, { recursive: true });
+const env = { ...process.env, SOTTO_SMOKE_TEST: '1', SOTTO_TEST_DATA: directory }; delete env.ELECTRON_RUN_AS_NODE;
+const executable = process.env.SOTTO_EXECUTABLE || require('electron');
+const child = spawn(executable, process.env.SOTTO_EXECUTABLE ? [] : ['.'], { cwd: path.join(__dirname, '..'), env, stdio: 'inherit', windowsHide: true });
+const timeout = setTimeout(() => { child.kill(); process.stderr.write('Desktop smoke test timed out.\n'); }, 90000);
+child.on('exit', () => { clearTimeout(timeout); const file = path.join(directory, 'smoke.json'); if (!fs.existsSync(file)) { process.stderr.write('No smoke report.\n'); process.exitCode = 1; return; } const report = JSON.parse(fs.readFileSync(file)); process.stdout.write(JSON.stringify({ directory, ...report }, null, 2) + '\n'); process.exitCode = report.ok ? 0 : 1; });

@@ -1,0 +1,104 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const http = require('node:http');
+const assert = require('node:assert/strict');
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+async function run({ win, hud, store, desktop, app, globalShortcut, clipboard, directory }) {
+  const checks = {};
+  const review = path.join(directory, 'screenshots'); fs.mkdirSync(review, { recursive: true });
+  const evaluate = code => win.webContents.executeJavaScript(code, true);
+  const ipc = (channel, ...args) => evaluate(`window.sotto.call(${JSON.stringify(channel)}, ...${JSON.stringify(args)})`);
+  const capture = async name => { if (process.env.SOTTO_SKIP_SCREENSHOTS === '1') return; await delay(180); fs.writeFileSync(path.join(review, name + '.png'), (await win.webContents.capturePage()).toPNG()); };
+  const until = async predicate => { for (let n = 0; n < 120; n++) { if (await predicate()) return; await delay(100); } throw new Error('Timed out waiting for app state.'); };
+  try {
+    await until(() => desktop.ready);
+    checks.desktopHelper = true;
+    checks.bridge = await evaluate('!!window.sotto');
+    checks.noOverflow = await evaluate('document.documentElement.scrollWidth <= innerWidth');
+    checks.shortcut = globalShortcut.isRegistered(store.config.settings.hotkey);
+    assert.ok(checks.bridge && checks.noOverflow && checks.shortcut);
+    await evaluate('document.fonts.ready'); await capture('desktop');
+    await evaluate(`document.querySelector('[data-page="connections"]').click(); document.getElementById('add-api').click()`); await capture('connections');
+    await evaluate(`document.querySelector('[data-page="settings"]').click()`); await capture('settings');
+    const originalSize = win.getSize(); win.setMinimumSize(360, 600); win.setSize(390, 844);
+    await evaluate(`document.querySelector('[data-page="dictation"]').click()`); await capture('mobile');
+    checks.smallNoOverflow = await evaluate('document.documentElement.scrollWidth <= innerWidth');
+    assert.ok(checks.smallNoOverflow); win.setSize(...originalSize);
+    const server = http.createServer(async (req, res) => {
+      let body = ''; for await (const chunk of req) body += chunk;
+      res.setHeader('Content-Type', 'application/json');
+      if (req.url.endsWith('/models')) return res.end(JSON.stringify({ data: [{ id: 'test-flash' }] }));
+      if (req.url.endsWith('/audio/transcriptions')) return res.end(JSON.stringify({ text: 'আমি আজ আসতে পারব না।' }));
+      const input = JSON.parse(body || '{}');
+      if (body.includes('__FAIL__')) return res.writeHead(429).end('{}');
+      const bangla = input.messages?.[0]?.content.includes('explicitly selected Bangla');
+      res.end(JSON.stringify({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({ transcript: 'আমি আজ আসতে পারব না।', text: bangla ? 'আমি আজ আসতে পারব না।' : 'I will not be able to come today.', language: bangla ? 'Bangla' : 'English', noSpeech: false, uncertain: [] }) } }] }));
+    });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    const saved = await ipc('connection:save', { name: 'Local test provider', type: 'compatible', baseUrl: `http://127.0.0.1:${server.address().port}/v1`, apiKey: 'smoke-test-key-not-a-real-credential', model: 'test-flash' });
+    assert.ok(saved.ok); const connectionId = saved.value.id;
+    const tested = await ipc('connection:test', connectionId); assert.ok(tested.ok); checks.textConnection = true;
+    await ipc('text:process', 'আমি আজ আসতে পারব না।');
+    let snapshot = (await ipc('snapshot')).value;
+    assert.equal(snapshot.state.stage, 'done'); assert.equal(snapshot.history[0].text, 'I will not be able to come today.'); checks.typedPipeline = true;
+    await ipc('language', 'Bangla'); await ipc('text:process', 'আমি আজ আসতে পারব না।');
+    snapshot = (await ipc('snapshot')).value; assert.equal(snapshot.history[0].language, 'Bangla'); checks.languageSelection = true;
+    await ipc('language', '');
+    await ipc('recording:toggle');
+    await until(async () => (await ipc('snapshot')).value.state.stage === 'recording');
+    checks.recordingKeys = globalShortcut.isRegistered('B') && globalShortcut.isRegistered('E'); assert.ok(checks.recordingKeys);
+    await delay(1000); await ipc('recording:toggle');
+    await until(async () => ['done', 'error'].includes((await ipc('snapshot')).value.state.stage));
+    snapshot = (await ipc('snapshot')).value;
+    assert.equal(snapshot.state.stage, 'done', snapshot.state.message); checks.audioPipeline = true;
+    assert.ok(!globalShortcut.isRegistered('B') && !globalShortcut.isRegistered('E')); checks.keysReleased = true;
+    await ipc('text:process', '__FAIL__');
+    snapshot = (await ipc('snapshot')).value; assert.equal(snapshot.state.stage, 'error'); assert.equal(snapshot.history[0].status, 'failed'); checks.failedHistory = true;
+    assert.equal(snapshot.state.canRetry, true);
+    await ipc('recording:error', 'Test microphone unavailable');
+    assert.equal((await ipc('snapshot')).value.state.canRetry, false);
+    assert.equal((await ipc('retry')).ok, false); checks.noStaleRetry = true;
+    await ipc('settings:save', { ...store.config.settings, outputLanguage: 'Bangla', languageKeys: false });
+    await ipc('recording:toggle');
+    await until(async () => (await ipc('snapshot')).value.state.stage === 'recording');
+    const hudDetail = await hud.webContents.executeJavaScript(`document.getElementById('detail').innerText`);
+    assert.ok(hudDetail.includes('Bangla') && !hudDetail.includes('B Bangla')); checks.hudLanguageAndKeys = true;
+    await ipc('recording:cancel');
+    await ipc('settings:save', { ...store.config.settings, outputLanguage: 'English', languageKeys: true });
+    const credentials = fs.readFileSync(path.join(directory, 'credentials.json'), 'utf8');
+    assert.ok(!credentials.includes('smoke-test-key-not-a-real-credential')); checks.windowsEncryption = true;
+    await evaluate(`document.querySelector('[data-page="history"]').click()`); await capture('history');
+    if (process.env.SOTTO_SKIP_NATIVE === '1') {
+      checks.nativePasteSkipped = 'Foreground-dependent paste was already verified separately; this run checks the remaining desktop regressions.';
+      server.closeAllConnections(); server.close();
+      fs.writeFileSync(path.join(directory, 'smoke.json'), JSON.stringify({ ok: true, checks }, null, 2));
+      return;
+    }
+    // A real native paste into an isolated textbox in this test app. No other app is touched.
+    await evaluate(`document.querySelector('[data-page="dictation"]').click(); document.querySelector('.typed-test').open=true; window.__enterKeys=0; let input=document.getElementById('typed-input'); input.value=''; input.addEventListener('keydown',e=>{if(e.key==='Enter')window.__enterKeys++}); input.focus()`);
+    hud.hide(); win.setAlwaysOnTop(true); win.show(); win.moveTop(); win.focus(); win.webContents.focus();
+    await evaluate(`document.getElementById('typed-input').focus(); window.__keyEvents=[]; document.addEventListener('keydown',e=>window.__keyEvents.push({key:e.key,code:e.code,ctrl:e.ctrlKey}))`);
+    const handle = win.getNativeWindowHandle(); const ownWindow = handle.length >= 8 ? Number(handle.readBigUInt64LE()) : handle.readUInt32LE();
+    let target;
+    for (let attempt = 0; attempt < 15; attempt++) { await delay(200); target = await desktop.capture(); if (target.window === ownWindow) break; win.focus(); }
+    win.setAlwaysOnTop(false);
+    const previousClipboard = clipboard.readText();
+    checks.nativeTargetOwn = target.window === ownWindow;
+    checks.focusState = await evaluate(`({element:document.activeElement.id,document:document.hasFocus()})`);
+    assert.ok(checks.nativeTargetOwn, 'The test app does not own foreground focus; native input test was not sent.');
+    assert.equal(checks.focusState.element, 'typed-input'); assert.ok(checks.focusState.document);
+    const expected = 'বাংলা লেখা।\nEnglish second line.';
+    const insertion = await desktop.insert(target, expected);
+    assert.ok(insertion.ok, insertion.error);
+    const actual = await evaluate(`document.getElementById('typed-input').value`);
+    checks.pasteEvents = await evaluate('window.__keyEvents');
+    assert.equal(actual.replaceAll('\r\n', '\n'), expected); checks.unicodePaste = true;
+    assert.equal(await evaluate('window.__enterKeys'), 0); checks.noSubmitKey = true;
+    assert.equal(clipboard.readText(), previousClipboard); checks.clipboardRestored = true;
+    const rejected = await desktop.insert({ ...target, window: target.window + 1 }, 'Must not be inserted'); assert.equal(rejected.ok, false); checks.focusGuard = true;
+    server.closeAllConnections(); server.close();
+    fs.writeFileSync(path.join(directory, 'smoke.json'), JSON.stringify({ ok: true, checks }, null, 2));
+  } catch (error) { fs.writeFileSync(path.join(directory, 'smoke.json'), JSON.stringify({ ok: false, checks, error: error.stack, desktopDiagnostics: desktop.diagnostics }, null, 2)); }
+  finally { app.quit(); }
+}
+module.exports = { run };

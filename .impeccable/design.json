@@ -1,0 +1,708 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-16T14:57:22.555Z",
+  "title": "Design System: Sotto",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "secondary-text": {
+        "role": "neutral",
+        "displayName": "Secondary Text",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "sidebar": {
+        "role": "neutral",
+        "displayName": "Sidebar",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "nav-text": {
+        "role": "neutral",
+        "displayName": "Navigation Text",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "nav-selected": {
+        "role": "neutral",
+        "displayName": "Navigation Selected",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "nav-hover": {
+        "role": "neutral",
+        "displayName": "Navigation Hover",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "instrument": {
+        "role": "neutral",
+        "displayName": "Instrument",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "recording": {
+        "role": "neutral",
+        "displayName": "Recording",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "inverse-action": {
+        "role": "neutral",
+        "displayName": "Inverse Action",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "inverse-hover": {
+        "role": "neutral",
+        "displayName": "Inverse Hover",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "primary-hover": {
+        "role": "neutral",
+        "displayName": "Primary Hover",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "secondary-stroke": {
+        "role": "neutral",
+        "displayName": "Secondary Stroke",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "secondary-hover": {
+        "role": "neutral",
+        "displayName": "Secondary Hover",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "status-surface": {
+        "role": "neutral",
+        "displayName": "Status Surface",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "status-text": {
+        "role": "neutral",
+        "displayName": "Status Text",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Focus",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "field-stroke": {
+        "role": "neutral",
+        "displayName": "Field Stroke",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "field-placeholder": {
+        "role": "neutral",
+        "displayName": "Field Placeholder",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "instrument-secondary": {
+        "role": "neutral",
+        "displayName": "Instrument Secondary",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "hud": {
+        "role": "neutral",
+        "displayName": "HUD",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "hud-text": {
+        "role": "neutral",
+        "displayName": "HUD Text",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "hud-secondary": {
+        "role": "neutral",
+        "displayName": "HUD Secondary",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "hud-hairline": {
+        "role": "neutral",
+        "displayName": "HUD Hairline",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "hud-primary": {
+        "role": "neutral",
+        "displayName": "HUD Primary",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "hud-primary-hover": {
+        "role": "neutral",
+        "displayName": "HUD Primary Hover",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Two-line dictation page heading."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Compact History, Connections, and Settings headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Centered recording instrument title."
+      },
+      "section-title": {
+        "displayName": "Section Title",
+        "purpose": "Workspace and settings section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Main-window base type."
+      },
+      "reading": {
+        "displayName": "Reading",
+        "purpose": "Line-break preserving dictation result and transcript text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Normal capsule action labels."
+      },
+      "small-label": {
+        "displayName": "Small Label",
+        "purpose": "Small desktop capsule action labels after readability overrides."
+      },
+      "navigation": {
+        "displayName": "Navigation",
+        "purpose": "Main destination labels on desktop."
+      },
+      "field": {
+        "displayName": "Field",
+        "purpose": "Input, select, and textarea content after readability overrides."
+      },
+      "status": {
+        "displayName": "Status",
+        "purpose": "Neutral connection state capsule."
+      },
+      "operation-label": {
+        "displayName": "Operation Label",
+        "purpose": "Spaced uppercase state label inside the recording instrument."
+      },
+      "hud-title": {
+        "displayName": "HUD Title",
+        "purpose": "Readable primary recording operation label."
+      },
+      "hud-meta": {
+        "displayName": "HUD Metadata",
+        "purpose": "Supporting recorder notes and shortcut hint text."
+      },
+      "hud-language": {
+        "displayName": "HUD Language",
+        "purpose": "Compact recording or completed-result language capsule."
+      },
+      "hud-timer": {
+        "displayName": "HUD Timer",
+        "purpose": "Tabular elapsed recording time."
+      },
+      "hud-key": {
+        "displayName": "HUD Key",
+        "purpose": "Language-switch shortcut keycaps."
+      }
+    },
+    "shadows": [
+      {
+        "name": "secondary-action-stroke",
+        "value": "inset 0 0 0 1px #d2d2d2",
+        "purpose": "Workspace secondary action boundary; an inset stroke, not ambient elevation."
+      },
+      {
+        "name": "dark-outline-action-stroke",
+        "value": "inset 0 0 0 1px #595959",
+        "purpose": "Cancel action boundary on the recording instrument."
+      },
+      {
+        "name": "selected-segment",
+        "value": "0 2px 5px #25252510",
+        "purpose": "White selected API-type segment."
+      },
+      {
+        "name": "toast",
+        "value": "0 6px 24px #0002",
+        "purpose": "Transient message above the paper workspace."
+      },
+      {
+        "name": "recording-hud",
+        "value": "0 6px 15px #00000038",
+        "purpose": "Floating capsule above other desktop windows."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Source --ease custom property for action press transforms and switch-thumb travel."
+      },
+      {
+        "name": "action-transition",
+        "value": "background .2s, color .2s, transform .2s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Capsule action transitions."
+      },
+      {
+        "name": "waveform-response",
+        "value": "transform .12s linear",
+        "purpose": "Main instrument response to actual microphone levels."
+      },
+      {
+        "name": "hud-waveform-response",
+        "value": "transform 110ms linear",
+        "purpose": "Bounded nine-bar HUD meter response; level updates apply only while recording."
+      },
+      {
+        "name": "instrument-background",
+        "value": "background .3s",
+        "purpose": "Subtle deepening of the recording surface."
+      },
+      {
+        "name": "listening-dot",
+        "value": "breathe 1.7s ease-in-out infinite",
+        "purpose": "Recording stage only; midpoint opacity .35."
+      },
+      {
+        "name": "processing-waveform",
+        "value": "process 1.8s ease-in-out infinite",
+        "purpose": "Starting, transcribing, polishing, and inserting; midpoint opacity .35 and scaleX(.9)."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media(prefers-reduced-motion:reduce)",
+        "purpose": "Main window disables animation, transition, and smooth scrolling; HUD disables all transitions and animations."
+      },
+      {
+        "name": "hud-action-transition",
+        "value": "background 160ms, color 160ms, transform 160ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "Hover feedback and .92 pressed scale for the floating recorder actions."
+      },
+      {
+        "name": "hud-processing-spinner",
+        "value": "turn 1s linear infinite",
+        "purpose": "Starting, transcribing, polishing, and inserting; disabled by reduced-motion preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow-preview-max",
+        "value": "720px"
+      },
+      {
+        "name": "compact-desktop-max",
+        "value": "1050px"
+      },
+      {
+        "name": "wide-desktop-min",
+        "value": "1450px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Dark capsule for the main action on the paper workspace.",
+      "html": "<button class=\"ds-primary\">Save preferences</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:12px 22px;border:0;border-radius:var(--pill,999px);font:600 13px/1.3 Manrope,'Segoe UI','Nirmala UI',sans-serif;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .2s var(--ease,cubic-bezier(.16,1,.3,1));background:var(--ink,#191919);color:var(--white,#fff)}.ds-primary:hover{background:#3c3c3c}.ds-primary:focus-visible{outline:2px solid #777;outline-offset:4px}.ds-primary:active{transform:scale(.98)}.ds-primary:disabled{cursor:not-allowed;opacity:.45}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Secondary Action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined capsule for a supporting workspace action.",
+      "html": "<button class=\"ds-secondary\">Add API</button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:12px 22px;border:0;border-radius:var(--pill,999px);font:600 13px/1.3 Manrope,'Segoe UI','Nirmala UI',sans-serif;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .2s var(--ease,cubic-bezier(.16,1,.3,1));background:transparent;color:var(--ink,#191919);box-shadow:inset 0 0 0 1px #d2d2d2}.ds-secondary:hover{background:#ebebeb}.ds-secondary:focus-visible{outline:2px solid #777;outline-offset:4px}.ds-secondary:active{transform:scale(.98)}.ds-secondary:disabled{cursor:not-allowed;opacity:.45}@media(prefers-reduced-motion:reduce){.ds-secondary{transition:none}}"
+    },
+    {
+      "name": "Recording Action",
+      "kind": "button",
+      "refersTo": "button-record",
+      "description": "Pale capsule used inside the dark recording instrument.",
+      "html": "<div class=\"ds-record-context\"><button class=\"ds-record\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"9\" y=\"2\" width=\"6\" height=\"12\" rx=\"3\"/><path d=\"M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8\"/></svg>Start dictation<span class=\"ds-record-key\">Ctrl + P</span></button></div>",
+      "css": ".ds-record-context{background:#1c1c1c;padding:18px;border-radius:var(--radius,14px)}.ds-record{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:12px 22px;border:0;border-radius:var(--pill,999px);font:600 13px/1.3 Manrope,'Segoe UI','Nirmala UI',sans-serif;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .2s var(--ease,cubic-bezier(.16,1,.3,1));min-height:47px;background:#f7f7f7;color:#181818}.ds-record svg{width:16px;height:16px;flex-shrink:0}.ds-record-key{font-size:10px;border-left:1px solid #d5d5d5;padding-left:13px;margin-left:7px;font-weight:500;color:#6f6f6f}.ds-record:hover{background:#e1e1e1}.ds-record:focus-visible{outline:2px solid #777;outline-offset:4px}.ds-record:active{transform:scale(.98)}.ds-record:disabled{cursor:not-allowed;opacity:.45}@media(prefers-reduced-motion:reduce){.ds-record{transition:none}}"
+    },
+    {
+      "name": "Dark Outline Action",
+      "kind": "button",
+      "refersTo": "button-dark-outline",
+      "description": "Cancel action while the recording instrument has an active operation.",
+      "html": "<div class=\"ds-cancel-context\"><button class=\"ds-cancel\">Cancel</button></div>",
+      "css": ".ds-cancel-context{background:#1c1c1c;padding:18px;border-radius:var(--radius,14px)}.ds-cancel{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:12px 22px;border:0;border-radius:var(--pill,999px);font:600 13px/1.3 Manrope,'Segoe UI','Nirmala UI',sans-serif;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .2s var(--ease,cubic-bezier(.16,1,.3,1));background:transparent;color:#e8e8e8;box-shadow:inset 0 0 0 1px #595959}.ds-cancel:focus-visible{outline:2px solid #777;outline-offset:4px}.ds-cancel:active{transform:scale(.98)}.ds-cancel:disabled{cursor:not-allowed;opacity:.45}@media(prefers-reduced-motion:reduce){.ds-cancel{transition:none}}"
+    },
+    {
+      "name": "Labeled Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "White field with the final readable type and placeholder treatment.",
+      "html": "<label class=\"ds-field-label\">Connection name<input class=\"ds-field\" placeholder=\"My Gemini\"></label>",
+      "css": ".ds-field-label{display:block;color:var(--ink,#191919);font:650 12px/1.6 Manrope,'Segoe UI','Nirmala UI',sans-serif}.ds-field{display:block;margin-top:7px;width:100%;min-height:40px;padding:11px 12px;border:1px solid #d9d9d9;border-radius:9px;background:var(--white,#fff);color:var(--ink,#191919);font:400 12px/1.6 Manrope,'Segoe UI','Nirmala UI',sans-serif;caret-color:var(--ink,#191919)}.ds-field::placeholder{color:#707070;opacity:1}.ds-field:focus-visible{outline:2px solid #777;outline-offset:4px}"
+    },
+    {
+      "name": "Main Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Dark rail with pale selected capsule and retained destination labels.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><button class=\"ds-nav-item ds-nav-selected\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"9\" y=\"2\" width=\"6\" height=\"12\" rx=\"3\"/><path d=\"M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8\"/></svg>Dictation</button><button class=\"ds-nav-item\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 11a9 9 0 1 1 2 7M3 4v7h7m2-4v5l3 2\"/></svg>History<span class=\"ds-nav-count\">0</span></button></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;gap:7px;width:168px;padding:18px;background:var(--sidebar,#181818)}.ds-nav-item{display:flex;align-items:center;gap:12px;width:100%;padding:13px 17px;background:none;border:0;border-radius:var(--pill,999px);color:#b2b2b2;text-align:left;font:600 13px/1.6 Manrope,'Segoe UI','Nirmala UI',sans-serif;cursor:pointer;transition:background .2s,color .2s}.ds-nav-item svg{width:17px;height:17px;flex-shrink:0}.ds-nav-count{margin-left:auto;font-size:10px;font-weight:600}.ds-nav-item:hover{background:#262626;color:#fff}.ds-nav-item.ds-nav-selected{background:#f5f5f5;color:#191919}.ds-nav-item:focus-visible{outline:2px solid #777;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-nav-item{transition:none}}"
+    },
+    {
+      "name": "Connection Status",
+      "kind": "chip",
+      "refersTo": "status-pill",
+      "description": "A neutral state capsule whose words carry the connection evidence.",
+      "html": "<span class=\"ds-status\"><span class=\"ds-status-dot\" aria-hidden=\"true\"></span>Connect to get started</span>",
+      "css": ".ds-status{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;background:#eaeaea;color:#595959;border-radius:var(--pill,999px);font:600 11px/1.6 Manrope,'Segoe UI','Nirmala UI',sans-serif}.ds-status-dot{width:5px;height:5px;background:currentColor;border-radius:50%;flex-shrink:0}"
+    },
+    {
+      "name": "Recording Instrument",
+      "kind": "card",
+      "refersTo": "recording-instrument",
+      "description": "Idle disconnected snapshot; recording animation requires real microphone state.",
+      "html": "<section class=\"ds-instrument\" aria-label=\"Dictation\"><div class=\"ds-instrument-top\"><span class=\"ds-instrument-status\"><span class=\"ds-instrument-dot\" aria-hidden=\"true\"></span>READY WHEN YOU ARE</span><span class=\"ds-instrument-timer\">00:00</span></div><div class=\"ds-waveform\" aria-hidden=\"true\"><i style=\"--height:0.40\"></i><i style=\"--height:0.42\"></i><i style=\"--height:0.43\"></i><i style=\"--height:0.40\"></i><i style=\"--height:0.46\"></i><i style=\"--height:0.50\"></i><i style=\"--height:0.47\"></i><i style=\"--height:0.46\"></i><i style=\"--height:0.55\"></i><i style=\"--height:0.55\"></i><i style=\"--height:0.46\"></i><i style=\"--height:0.56\"></i><i style=\"--height:0.63\"></i><i style=\"--height:0.56\"></i><i style=\"--height:0.54\"></i><i style=\"--height:0.67\"></i><i style=\"--height:0.67\"></i><i style=\"--height:0.53\"></i><i style=\"--height:0.66\"></i><i style=\"--height:0.76\"></i><i style=\"--height:0.67\"></i><i style=\"--height:0.60\"></i><i style=\"--height:0.79\"></i><i style=\"--height:0.80\"></i><i style=\"--height:0.61\"></i><i style=\"--height:0.73\"></i><i style=\"--height:0.81\"></i><i style=\"--height:0.69\"></i><i style=\"--height:0.58\"></i><i style=\"--height:0.73\"></i><i style=\"--height:0.72\"></i><i style=\"--height:0.55\"></i><i style=\"--height:0.62\"></i><i style=\"--height:0.68\"></i><i style=\"--height:0.60\"></i><i style=\"--height:0.50\"></i><i style=\"--height:0.61\"></i><i style=\"--height:0.60\"></i><i style=\"--height:0.49\"></i><i style=\"--height:0.51\"></i><i style=\"--height:0.55\"></i><i style=\"--height:0.50\"></i><i style=\"--height:0.43\"></i><i style=\"--height:0.48\"></i><i style=\"--height:0.48\"></i><i style=\"--height:0.42\"></i><i style=\"--height:0.42\"></i><i style=\"--height:0.42\"></i><i style=\"--height:0.41\"></i></div><div class=\"ds-instrument-copy\"><h2>A thought, out loud.</h2><p>From your voice to wherever you’re writing.</p></div><div class=\"ds-instrument-actions\"><button class=\"ds-instrument-action\">Connect a provider</button></div><div class=\"ds-instrument-hints\"><span><kbd>B</kbd> Bangla</span><span><kbd>E</kbd> English</span><span class=\"ds-instrument-divider\"></span><span>Press while recording</span></div></section>",
+      "css": ".ds-instrument{min-height:312px;padding:22px 27px 18px;background:#1c1c1c;color:#fff;border-radius:var(--radius,14px);overflow:hidden;font-family:Manrope,'Segoe UI','Nirmala UI',sans-serif;transition:background .3s}.ds-instrument-top{display:flex;align-items:center;justify-content:space-between}.ds-instrument-status{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:550;letter-spacing:.12em;color:#b6b6b6}.ds-instrument-dot{width:5px;height:5px;border-radius:50%;background:currentColor}.ds-instrument-timer{font-size:12px;font-variant-numeric:tabular-nums;color:#afafaf}.ds-waveform{display:flex;align-items:center;justify-content:center;gap:5px;height:65px;margin-top:12px;contain:layout paint}.ds-waveform i{width:3px;height:8px;border-radius:3px;background:#d7d7d7;transform:scaleY(var(--height,1));transition:transform .12s linear}.ds-waveform i:nth-child(2n){background:#7a7a7a}.ds-instrument-copy{text-align:center;margin-top:3px}.ds-instrument-copy h2{margin:0;font-size:24px;font-weight:500;line-height:1.3;letter-spacing:-.035em}.ds-instrument-copy p{margin:7px 0 0;font-size:12px;line-height:1.6;color:#aeaeae}.ds-instrument-actions{display:flex;justify-content:center;margin:21px 0 17px}.ds-instrument-action{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:12px 22px;border:0;border-radius:var(--pill,999px);font:600 13px/1.3 Manrope,'Segoe UI','Nirmala UI',sans-serif;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .2s var(--ease,cubic-bezier(.16,1,.3,1));min-height:47px;background:#f7f7f7;color:#181818}.ds-instrument-action:hover{background:#e1e1e1}.ds-instrument-action:focus-visible{outline:2px solid #777;outline-offset:4px}.ds-instrument-action:active{transform:scale(.98)}.ds-instrument-action:disabled{cursor:not-allowed;opacity:.45}.ds-instrument-hints{display:flex;align-items:center;justify-content:center;gap:14px;font-size:11px;line-height:1.6;color:#aaa}.ds-instrument-hints kbd{display:inline-block;width:22px;margin-right:4px;border:1px solid #4f4f4f;border-radius:4px;color:#d1d1d1;text-align:center;font:500 11px/21px Manrope,sans-serif}.ds-instrument-divider{width:1px;height:11px;background:#484848}.ds-instrument.ds-is-recording{background:#151515}.ds-is-recording .ds-instrument-dot{animation:ds-breathe 1.7s ease-in-out infinite}.ds-is-processing .ds-waveform{animation:ds-process 1.8s ease-in-out infinite}@keyframes ds-breathe{50%{opacity:.35}}@keyframes ds-process{50%{opacity:.35;transform:scaleX(.9)}}@media(max-width:720px){.ds-instrument{padding:19px 18px}.ds-waveform{gap:4px}.ds-waveform i:nth-child(-n+5),.ds-waveform i:nth-last-child(-n+5){display:none}.ds-instrument-copy h2{font-size:23px}.ds-instrument-hints{gap:9px;font-size:10px}}@media(prefers-reduced-motion:reduce){.ds-instrument,.ds-waveform,.ds-waveform i,.ds-instrument-action,.ds-instrument-dot{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "API Type Segments",
+      "kind": "custom",
+      "description": "Existing capsule track with a white selected API-type segment.",
+      "html": "<div class=\"ds-segmented\" role=\"group\" aria-label=\"API type\"><button class=\"ds-segment ds-segment-selected\" type=\"button\">Gemini API</button><button class=\"ds-segment\" type=\"button\">Compatible API</button></div>",
+      "css": ".ds-segmented{display:inline-flex;gap:3px;padding:4px;background:#e9e9e9;border-radius:var(--pill,999px)}.ds-segment{padding:9px 17px;background:transparent;border:0;border-radius:var(--pill,999px);color:#666;font:600 12px/1.6 Manrope,'Segoe UI','Nirmala UI',sans-serif;cursor:pointer}.ds-segment.ds-segment-selected{background:var(--white,#fff);color:var(--ink,#191919);box-shadow:0 2px 5px #25252510}.ds-segment:focus-visible{outline:2px solid #777;outline-offset:4px}"
+    },
+    {
+      "name": "Floating Recording HUD",
+      "kind": "custom",
+      "refersTo": "hud",
+      "description": "438×104 nonactivating wrapper with a 398×64 capsule; self-contained listening-state specimen. Stage-specific actions are documented in DESIGN.md.",
+      "html": "<div class=\"ds-hud-canvas\"><div class=\"ds-hud-capsule\" data-stage=\"recording\" role=\"group\" aria-label=\"Sotto dictation controls\">\n    <div class=\"ds-hud-signal\" aria-hidden=\"true\">\n      <span class=\"ds-hud-wave\"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>\n      <svg class=\"ds-hud-spinner\" viewBox=\"0 0 28 28\" fill=\"none\"><circle class=\"ds-hud-spinner-track\" cx=\"14\" cy=\"14\" r=\"10\"/><path d=\"M14 4a10 10 0 0 1 10 10\"/></svg>\n      <span class=\"ds-hud-signal-symbol\"></span>\n    </div>\n    <div class=\"ds-hud-copy\">\n      <div class=\"ds-hud-status-row\"><strong id=\"ds-hud-label\" role=\"status\" aria-live=\"polite\">Listening</strong><span class=\"ds-hud-hidden\" id=\"ds-hud-elapsed\" aria-live=\"off\">00:00</span></div>\n      <div class=\"ds-hud-detail-row\" id=\"ds-hud-detail\"><span class=\"ds-hud-language ds-hud-hidden\" id=\"ds-hud-language\">English</span><span class=\"ds-hud-key-hint ds-hud-hidden\" id=\"ds-hud-key-hint\" title=\"B for Bangla · E for English\" aria-label=\"B for Bangla, E for English\"><kbd>B</kbd><span>/</span><kbd>E</kbd><span>to switch</span></span><span class=\"ds-hud-note\" id=\"ds-hud-note\">Opening your microphone</span></div>\n    </div>\n    <span class=\"ds-hud-separator\" aria-hidden=\"true\"></span>\n    <div class=\"ds-hud-controls\">\n      <button class=\"ds-hud-primary ds-hud-hidden\" id=\"ds-hud-finish\" type=\"button\" aria-label=\"Finish dictation\" title=\"Finish dictation\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><rect x=\"7\" y=\"7\" width=\"10\" height=\"10\" rx=\"2\"/></svg></button>\n      <button class=\"ds-hud-dismiss\" id=\"ds-hud-cancel\" type=\"button\" aria-label=\"Cancel dictation\" title=\"Cancel dictation\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"m7 7 10 10M7 17 17 7\"/></svg></button>\n    </div>\n  </div></div>",
+      "css": ".ds-hud-canvas{box-sizing:border-box;width:438px;height:104px;padding:20px;background:transparent;color:var(--text,#f6f6f6);font:12px/1.4 Manrope,'Segoe UI','Nirmala UI',sans-serif;user-select:none}.ds-hud-capsule{box-sizing:border-box}.ds-hud-capsule{width:100%;height:64px;display:grid;grid-template-columns:34px minmax(0,1fr) 1px 76px;align-items:center;gap:12px;padding:10px 13px 10px 17px;border:1px solid #343434;border-radius:999px;background:var(--surface,#161616);box-shadow:0 6px 15px #00000038;isolation:isolate}\n.ds-hud-signal{height:30px;width:34px;display:grid;place-items:center;overflow:hidden}\n.ds-hud-wave{height:28px;width:34px;display:flex;align-items:center;justify-content:center;gap:2px;overflow:hidden}\n.ds-hud-wave i{display:block;width:2px;height:4px;flex-shrink:0;border-radius:2px;background:#ededed;transform:scaleY(var(--height,1));transition:transform 110ms linear;will-change:transform}\n.ds-hud-wave i:nth-child(2n){background:#b3b3b3}\n.ds-hud-copy{min-width:0;align-self:center}\n.ds-hud-status-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;min-height:19px}\n.ds-hud-status-row strong{font-size:14px;font-weight:600;letter-spacing:-.015em;white-space:nowrap}\n#ds-hud-elapsed{color:#b7b7b7;font-size:11px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.01em}\n.ds-hud-detail-row{display:flex;align-items:center;gap:9px;margin-top:4px;height:19px;min-width:0}\n.ds-hud-language{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;background:#303030;color:#e2e2e2;font-size:11px;font-weight:600;line-height:14px;white-space:nowrap;max-width:105px;overflow:hidden;text-overflow:ellipsis}\n.ds-hud-key-hint{display:flex;align-items:center;gap:4px;color:#b8b8b8;font-size:11px;white-space:nowrap}\n.ds-hud-key-hint kbd{font:500 10px/15px Manrope,sans-serif;min-width:15px;height:17px;display:inline-block;border:1px solid #555;border-radius:4px;text-align:center;color:#ddd}\n.ds-hud-key-hint>span:last-child{margin-left:2px}\n.ds-hud-note{font-size:11px;color:var(--secondary,#b8b8b8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}\n.ds-hud-separator{height:26px;width:1px;background:var(--hairline,#393939)}\n.ds-hud-controls{display:flex;align-items:center;justify-content:flex-end;gap:6px}\n.ds-hud-canvas button{display:grid;place-items:center;border:0;padding:0;cursor:pointer;border-radius:50%;flex-shrink:0;transition:background 160ms,color 160ms,transform 160ms var(--ease,cubic-bezier(.16,1,.3,1))}\n.ds-hud-canvas button:active{transform:scale(.92)}\n.ds-hud-canvas button:focus-visible{outline:2px solid #fff;outline-offset:3px}\n.ds-hud-canvas button svg{height:20px;width:20px}\n.ds-hud-primary{width:36px;height:36px;background:#f2f2f2;color:#191919}\n.ds-hud-primary:hover{background:#d7d7d7}\n.ds-hud-dismiss{width:30px;height:30px;background:transparent;color:#bdbdbd}\n.ds-hud-dismiss:hover{color:#fff;background:#333}\n.ds-hud-dismiss svg{width:18px;height:18px}\n.ds-hud-spinner{display:none;width:28px;height:28px;stroke:#e4e4e4;stroke-width:1.7;stroke-linecap:round;animation:ds-hud-turn 1s linear infinite}\n.ds-hud-spinner-track{stroke:#464646}\n.ds-hud-signal-symbol{display:none;line-height:0}\n.ds-hud-signal-symbol svg{height:24px;width:24px;stroke:#ededed;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}\n.ds-hud-capsule[data-stage=starting] .ds-hud-wave,.ds-hud-capsule[data-stage=transcribing] .ds-hud-wave,.ds-hud-capsule[data-stage=polishing] .ds-hud-wave,.ds-hud-capsule[data-stage=inserting] .ds-hud-wave{display:none}\n.ds-hud-capsule[data-stage=starting] .ds-hud-spinner,.ds-hud-capsule[data-stage=transcribing] .ds-hud-spinner,.ds-hud-capsule[data-stage=polishing] .ds-hud-spinner,.ds-hud-capsule[data-stage=inserting] .ds-hud-spinner{display:block}\n.ds-hud-capsule[data-stage=done] .ds-hud-wave,.ds-hud-capsule[data-stage=error] .ds-hud-wave,.ds-hud-capsule[data-stage=cancelled] .ds-hud-wave{display:none}\n.ds-hud-capsule[data-stage=done] .ds-hud-signal-symbol,.ds-hud-capsule[data-stage=error] .ds-hud-signal-symbol,.ds-hud-capsule[data-stage=cancelled] .ds-hud-signal-symbol{display:block}\n.ds-hud-hidden{display:none!important}\n@keyframes ds-hud-turn{to{transform:rotate(360deg)}}\n@media(prefers-reduced-motion:reduce){.ds-hud-canvas *,.ds-hud-canvas *:before,.ds-hud-canvas *:after{transition:none!important;animation:none!important}}\n"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Writing Instrument",
+    "overview": "Sotto is a restrained Windows writing tool: ink-black navigation, a paper-white workspace, Manrope lettering, capsule controls, and fine grayscale dividers. The confirmed direction is black and white, classy, and clear about the current operation. Contrast, type, and spacing supply hierarchy; the interface stays calm around the user's words.\n\nThis is a snapshot of the built HTML/CSS interface inside its Electron desktop wrapper, drawn from the design contract in `src/index.html`, the complete CSS cascade in `src/styles.css`, the recording HUD, and the renderer's real states. The desktop and narrow screenshots in `.test-data/run-1792160889245/screenshots/` are implementation evidence. The refined floating recorder is captured in `.impeccable/review/floating/final-1.png` through `final-7.png`. There is no approved visual comp. The North Star names the existing contract rather than proposing another visual direction.",
+    "keyCharacteristics": [
+      "Monochrome contrast with an inky navigation rail and recording surface.",
+      "Capsule actions, rounded fields, and thin dividers.",
+      "One visible dictation action with explicit operation labels and recovery.",
+      "Self-hosted Manrope with Windows and multilingual fallbacks.",
+      "Real history, real connection status, and microphone-driven recording feedback."
+    ],
+    "rules": [
+      {
+        "name": "The Monochrome State Rule",
+        "body": "Distinguish operations with explicit text, control state, and restrained motion. Do not introduce color as the only state signal.",
+        "section": "colors"
+      },
+      {
+        "name": "The Final Cascade Rule",
+        "body": "Treat the final accessibility overrides in the stylesheet as the typography and secondary-text authority. Earlier 8–10px declarations are not the default for new desktop controls.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Workspace Rule",
+        "body": "Keep ordinary content flat; reserve ambient shadow for the floating HUD, toast, and the existing selected segment.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Observable Operation Rule",
+        "body": "Keep the current stage, language, timer, disabled action, and recovery copy synchronized with real state. Never substitute a looping idle animation for microphone evidence.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do preserve the confirmed black-and-white direction, capsule controls, and clear operation states.",
+      "Do use the final stylesheet cascade when taking type and secondary-text values.",
+      "Do keep keyboard focus visible and respect reduced-motion preference.",
+      "Do expose real recording, processing, verification, cancellation, and recovery states with words.",
+      "Do use self-hosted Manrope and preserve Windows and multilingual fallbacks.",
+      "Do keep actual user text readable, line-break preserving, and direction-aware."
+    ],
+    "donts": [
+      "Don't add a chromatic accent as a required state signal.",
+      "Don't add shadows to ordinary workspace sections or turn every region into a card.",
+      "Don't invent history, account readiness, measured latency, or microphone activity.",
+      "Don't describe a saved API connection or successful text test as proven audio access.",
+      "Don't treat the narrow preview as a released mobile product or bypass the desktop minimum size.",
+      "Don't use the older tiny label declarations as the new desktop typography scale."
+    ]
+  }
+}

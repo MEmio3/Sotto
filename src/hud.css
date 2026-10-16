@@ -1,0 +1,42 @@
+@font-face{font-family:Manrope;src:url('assets/manrope.woff2') format('woff2');font-weight:200 800;font-display:swap}
+:root{--surface:#161616;--text:#f6f6f6;--secondary:#b8b8b8;--hairline:#393939;--ease:cubic-bezier(.16,1,.3,1)}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent}
+body{padding:20px;font:12px/1.4 Manrope,'Segoe UI','Nirmala UI',sans-serif;color:var(--text);user-select:none}
+.capsule{width:100%;height:64px;display:grid;grid-template-columns:34px minmax(0,1fr) 1px 76px;align-items:center;gap:12px;padding:10px 13px 10px 17px;border:1px solid #343434;border-radius:999px;background:var(--surface);box-shadow:0 6px 15px #00000038;isolation:isolate}
+.signal{height:30px;width:34px;display:grid;place-items:center;overflow:hidden}
+.wave{height:28px;width:34px;display:flex;align-items:center;justify-content:center;gap:2px;overflow:hidden}
+.wave i{display:block;width:2px;height:4px;flex-shrink:0;border-radius:2px;background:#ededed;transform:scaleY(var(--height,1));transition:transform 110ms linear;will-change:transform}
+.wave i:nth-child(2n){background:#b3b3b3}
+.copy{min-width:0;align-self:center}
+.status-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;min-height:19px}
+.status-row strong{font-size:14px;font-weight:600;letter-spacing:-.015em;white-space:nowrap}
+#elapsed{color:#b7b7b7;font-size:11px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.detail-row{display:flex;align-items:center;gap:9px;margin-top:4px;height:19px;min-width:0}
+.language{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;background:#303030;color:#e2e2e2;font-size:11px;font-weight:600;line-height:14px;white-space:nowrap;max-width:105px;overflow:hidden;text-overflow:ellipsis}
+.key-hint{display:flex;align-items:center;gap:4px;color:#b8b8b8;font-size:11px;white-space:nowrap}
+.key-hint kbd{font:500 10px/15px Manrope,sans-serif;min-width:15px;height:17px;display:inline-block;border:1px solid #555;border-radius:4px;text-align:center;color:#ddd}
+.key-hint>span:last-child{margin-left:2px}
+.note{font-size:11px;color:var(--secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.separator{height:26px;width:1px;background:var(--hairline)}
+.controls{display:flex;align-items:center;justify-content:flex-end;gap:6px}
+button{display:grid;place-items:center;border:0;padding:0;cursor:pointer;border-radius:50%;flex-shrink:0;transition:background 160ms,color 160ms,transform 160ms var(--ease)}
+button:active{transform:scale(.92)}
+button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+button svg{height:20px;width:20px}
+.primary{width:36px;height:36px;background:#f2f2f2;color:#191919}
+.primary:hover{background:#d7d7d7}
+.dismiss{width:30px;height:30px;background:transparent;color:#bdbdbd}
+.dismiss:hover{color:#fff;background:#333}
+.dismiss svg{width:18px;height:18px}
+.spinner{display:none;width:28px;height:28px;stroke:#e4e4e4;stroke-width:1.7;stroke-linecap:round;animation:turn 1s linear infinite}
+.spinner-track{stroke:#464646}
+.signal-symbol{display:none;line-height:0}
+.signal-symbol svg{height:24px;width:24px;stroke:#ededed;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.capsule[data-stage=starting] .wave,.capsule[data-stage=transcribing] .wave,.capsule[data-stage=polishing] .wave,.capsule[data-stage=inserting] .wave{display:none}
+.capsule[data-stage=starting] .spinner,.capsule[data-stage=transcribing] .spinner,.capsule[data-stage=polishing] .spinner,.capsule[data-stage=inserting] .spinner{display:block}
+.capsule[data-stage=done] .wave,.capsule[data-stage=error] .wave,.capsule[data-stage=cancelled] .wave{display:none}
+.capsule[data-stage=done] .signal-symbol,.capsule[data-stage=error] .signal-symbol,.capsule[data-stage=cancelled] .signal-symbol{display:block}
+.hidden{display:none!important}
+@keyframes turn{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}

@@ -1,0 +1,47 @@
+{
+  "name": "sotto-desktop",
+  "version": "0.1.0",
+  "description": "Quietly turn your voice into considered words, anywhere on Windows.",
+  "main": "electron/main.cjs",
+  "author": "Sotto",
+  "license": "MIT",
+  "scripts": {
+    "start": "node scripts/launch.cjs",
+    "test": "node --test tests/*.test.cjs",
+    "pack": "electron-builder --win dir",
+    "dist": "electron-builder --win portable",
+    "preview": "node scripts/preview.cjs",
+    "smoke": "node scripts/smoke.cjs"
+  },
+  "devDependencies": {
+    "@fontsource-variable/manrope": "^5.3.0",
+    "electron": "^42.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "studio.sotto.desktop",
+    "productName": "Sotto",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "native/**/*",
+      "package.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "asarUnpack": [
+      "native/**/*"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "src/assets/icon.ico",
+      "signExecutable": false
+    },
+    "portable": {
+      "artifactName": "Sotto-${version}-Windows.exe"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'">
+  <title>Sotto · Recording</title>
+  <link rel="stylesheet" href="hud.css">
+  <script src="hud.js" defer></script>
+</head>
+<body>
+  <div class="capsule" data-stage="starting" role="group" aria-label="Sotto dictation controls">
+    <div class="signal" aria-hidden="true">
+      <span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <svg class="spinner" viewBox="0 0 28 28" fill="none"><circle class="spinner-track" cx="14" cy="14" r="10"/><path d="M14 4a10 10 0 0 1 10 10"/></svg>
+      <span class="signal-symbol"></span>
+    </div>
+    <div class="copy">
+      <div class="status-row"><strong id="label" role="status" aria-live="polite">Getting ready</strong><span class="hidden" id="elapsed" aria-live="off">00:00</span></div>
+      <div class="detail-row" id="detail"><span class="language hidden" id="language">English</span><span class="key-hint hidden" id="key-hint" title="B for Bangla · E for English" aria-label="B for Bangla, E for English"><kbd>B</kbd><span>/</span><kbd>E</kbd><span>to switch</span></span><span class="note" id="note">Opening your microphone</span></div>
+    </div>
+    <span class="separator" aria-hidden="true"></span>
+    <div class="controls">
+      <button class="primary hidden" id="finish" type="button" aria-label="Finish dictation" title="Finish dictation"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
+      <button class="dismiss" id="cancel" type="button" aria-label="Cancel dictation" title="Cancel dictation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="m7 7 10 10M7 17 17 7"/></svg></button>
+    </div>
+  </div>
+</body>
+</html>
